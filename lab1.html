@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tokyo Odyssey | Premium Travel & Tourism Experience</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for professional icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tokyoRed: '#bc002d',
+                        tokyoDark: '#121212',
+                        tokyoSlate: '#1e1e1e',
+                        tokyoCard: '#1a1a1a',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0b0b;
+            color: #e5e7eb;
+        }
+        .glass-panel {
+            background: rgba(26, 26, 26, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .hero-bg {
+            background-image: linear-gradient(to bottom, rgba(11,11,11,0.3), rgba(11,11,11,0.9)), url('https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=2000&q=85');
+            background-size: cover;
+            background-position: center;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121212;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #bc002d;
+        }
+    </style>
+</head>
+<body class="bg-[#0b0b0b] text-gray-100 antialiased selection:bg-tokyoRed selection:text-white">
+
+    <!-- Notification Modal Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-32 opacity-0 transition-all duration-300 glass-panel px-6 py-4 rounded-xl shadow-2xl flex items-center space-x-3 border-l-4 border-tokyoRed">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-tokyoRed text-xl"></i>
+        <div>
+            <h4 id="toast-title" class="font-bold text-sm text-white">Notification</h4>
+            <p id="toast-message" class="text-xs text-gray-300">Action completed successfully.</p>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 glass-panel border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-lg bg-tokyoRed flex items-center justify-center text-white font-display font-bold text-xl shadow-lg shadow-tokyoRed/30 group-hover:scale-105 transition-transform">
+                    京
+                </div>
+                <div>
+                    <span class="font-display font-extrabold text-xl tracking-wider text-white">TOKYO<span class="text-tokyoRed">ODYSSEY</span></span>
+                    <span class="block text-[10px] uppercase tracking-widest text-gray-400 font-medium">Curated Travel & Culture</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <a href="#destinations" class="text-gray-300 hover:text-white transition-colors">Destinations</a>
+                <a href="#experiences" class="text-gray-300 hover:text-white transition-colors">Experiences</a>
+                <a href="#itinerary" class="text-gray-300 hover:text-white transition-colors">Itinerary Planner</a>
+                <a href="#practical" class="text-gray-300 hover:text-white transition-colors">Travel Info</a>
+            </nav>
+
+            <!-- Actions & Simulators -->
+            <div class="hidden lg:flex items-center space-x-4">
+                <!-- Currency switcher -->
+                <div class="relative">
+                    <select id="currency-select" class="bg-tokyoDark text-xs text-gray-300 border border-white/10 rounded-lg px-3 py-2 focus:outline-none focus:border-tokyoRed cursor-pointer">
+                        <option value="JPY">¥ JPY (Yen)</option>
+                        <option value="USD">$ USD</option>
+                        <option value="EUR">€ EUR</option>
+                    </select>
+                </div>
+                <a href="#itinerary" class="bg-tokyoRed hover:bg-tokyoRed/90 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-tokyoRed/20 hover:shadow-tokyoRed/40">
+                    Plan Trip
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-white focus:outline-none p-2">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-white/10 px-6 py-6 space-y-4">
+            <a href="#destinations" class="block text-gray-300 hover:text-white font-medium py-1">Destinations</a>
+            <a href="#experiences" class="block text-gray-300 hover:text-white font-medium py-1">Experiences</a>
+            <a href="#itinerary" class="block text-gray-300 hover:text-white font-medium py-1">Itinerary Planner</a>
+            <a href="#practical" class="block text-gray-300 hover:text-white font-medium py-1">Travel Info</a>
+            <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                <span class="text-xs text-gray-400">Currency</span>
+                <select class="bg-tokyoDark text-xs text-gray-300 border border-white/10 rounded-lg px-3 py-1.5">
+                    <option value="JPY">¥ JPY</option>
+                    <option value="USD">$ USD</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen hero-bg flex items-center justify-center pt-20 pb-16 px-4 sm:px-6 lg:px-8">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0b0b0b] via-transparent to-transparent"></div>
+        <div class="max-w-5xl mx-auto text-center relative z-10 space-y-8">
+            <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-semibold text-gray-200 tracking-wider uppercase">
+                <span class="w-2 h-2 rounded-full bg-tokyoRed animate-pulse"></span>
+                <span>Discover the Heart of Japan</span>
+            </div>
+            
+            <h1 class="font-display font-extrabold text-4xl sm:text-6xl lg:text-7xl tracking-tight text-white leading-none">
+                Where Tradition Meets <span class="text-transparent bg-clip-text bg-gradient-to-r from-tokyoRed to-rose-400">Tomorrow</span>
+            </h1>
+            
+            <p class="max-w-2xl mx-auto text-base sm:text-lg text-gray-300 font-light leading-relaxed">
+                Immerse yourself in neon-lit skyscrapers, serene bamboo sanctuaries, world-class culinary artistry, and centuries of timeless heritage.
+            </p>
+
+            <!-- Floating Search / Filter Bar -->
+            <div class="max-w-3xl mx-auto glass-panel p-3 rounded-2xl shadow-2xl grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div class="flex items-center space-x-3 px-4 py-3 bg-black/40 rounded-xl border border-white/5">
+                    <i class="fa-solid fa-location-dot text-tokyoRed"></i>
+                    <div class="flex-1 text-left">
+                        <label class="block text-[10px] uppercase font-semibold text-gray-400">Explore Area</label>
+                        <select id="hero-area-filter" class="w-full bg-transparent text-sm text-white focus:outline-none cursor-pointer">
+                            <option value="all" class="bg-tokyoDark">All Neighborhoods</option>
+                            <option value="shinjuku" class="bg-tokyoDark">Shinjuku</option>
+                            <option value="shibuya" class="bg-tokyoDark">Shibuya</option>
+                            <option value="asakusa" class="bg-tokyoDark">Asakusa</option>
+                            <option value="ginza" class="bg-tokyoDark">Ginza</option>
+                            <option value="akihabara" class="bg-tokyoDark">Akihabara</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-3 px-4 py-3 bg-black/40 rounded-xl border border-white/5">
+                    <i class="fa-solid fa-compass text-tokyoRed"></i>
+                    <div class="flex-1 text-left">
+                        <label class="block text-[10px] uppercase font-semibold text-gray-400">Experience Type</label>
+                        <select id="hero-type-filter" class="w-full bg-transparent text-sm text-white focus:outline-none cursor-pointer">
+                            <option value="all" class="bg-tokyoDark">All Categories</option>
+                            <option value="temple" class="bg-tokyoDark">Temples & Shrines</option>
+                            <option value="food" class="bg-tokyoDark">Gastronomy</option>
+                            <option value="modern" class="bg-tokyoDark">Architecture & Views</option>
+                            <option value="shopping" class="bg-tokyoDark">Shopping & Culture</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button onclick="filterAttractions()" class="w-full bg-tokyoRed hover:bg-tokyoRed/90 text-white font-semibold rounded-xl py-3 px-6 transition-all shadow-lg shadow-tokyoRed/30 flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>Search Tokyo</span>
+                </button>
+            </div>
+
+            <!-- Quick Live Weather Ticker -->
+            <div id="weather-widget" class="inline-flex items-center space-x-4 px-6 py-2.5 rounded-full bg-black/60 border border-white/10 text-xs text-gray-300 backdrop-blur-md">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-cloud-sun text-yellow-400"></i>
+                    <span id="tokyo-temp">Tokyo 18°C</span>
+                </div>
+                <span class="text-white/20">|</span>
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-clock text-tokyoRed"></i>
+                    <span id="tokyo-time">Loading time...</span>
+                </div>
+                <span class="text-white/20">|</span>
+                <span class="text-emerald-400 font-medium">Safe & Low Humidity</span>
+            </div>
+        </div>
+
+        <!-- Scroll down indicator -->
+        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-center animate-bounce hidden sm:block">
+            <a href="#destinations" class="text-gray-400 hover:text-white">
+                <i class="fa-solid fa-chevron-down text-sm"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Neighborhoods Section -->
+    <section id="destinations" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+            <div>
+                <span class="text-tokyoRed font-semibold text-xs uppercase tracking-widest block mb-2">Iconic Districts</span>
+                <h2 class="font-display font-bold text-3xl sm:text-4xl text-white">Explore Tokyo's Neighborhoods</h2>
+            </div>
+            <!-- Category Filter Pills -->
+            <div class="flex flex-wrap gap-2 mt-6 md:mt-0">
+                <button onclick="filterNeighborhoods('all')" class="neighborhood-pill active-pill px-4 py-2 rounded-xl text-xs font-semibold bg-tokyoRed text-white transition-all">All Areas</button>
+                <button onclick="filterNeighborhoods('shinjuku')" class="neighborhood-pill px-4 py-2 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-gray-300 transition-all border border-white/10">Shinjuku</button>
+                <button onclick="filterNeighborhoods('shibuya')" class="neighborhood-pill px-4 py-2 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-gray-300 transition-all border border-white/10">Shibuya</button>
+                <button onclick="filterNeighborhoods('asakusa')" class="neighborhood-pill px-4 py-2 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-gray-300 transition-all border border-white/10">Asakusa</button>
+                <button onclick="filterNeighborhoods('ginza')" class="neighborhood-pill px-4 py-2 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-gray-300 transition-all border border-white/10">Ginza</button>
+                <button onclick="filterNeighborhoods('akihabara')" class="neighborhood-pill px-4 py-2 rounded-xl text-xs font-semibold bg-white/5 hover:bg-white/10 text-gray-300 transition-all border border-white/10">Akihabara</button>
+            </div>
+        </div>
+
+        <!-- Neighborhood Cards Grid -->
+        <div id="neighborhoods-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Card 1: Shinjuku -->
+            <div class="neighborhood-card group bg-tokyoCard rounded-2xl overflow-hidden border border-white/10 hover:border-tokyoRed/50 transition-all duration-300 shadow-xl flex flex-col" data-category="shinjuku">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=800&q=80" alt="Shinjuku" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.src='https://placehold.co/800x600/1a1a1a/ffffff?text=Shinjuku'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-tokyoCard via-transparent to-transparent"></div>
+                    <span class="absolute top-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-semibold text-white border border-white/10">Nightlife & Skyline</span>
+                    <span class="absolute top-4 right-4 bg-tokyoRed text-white px-3 py-1 rounded-lg text-xs font-bold">★ 4.9</span>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <div>
+                        <h3 class="font-display font-bold text-2xl text-white mb-2">Shinjuku</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Home to the world's busiest railway station, neon alleyways like Omoide Yokocho, and towering skyscrapers.</p>
+                    </div>
+                    <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                        <span class="text-xs text-gray-400"><i class="fa-solid fa-train text-tokyoRed mr-1"></i> Shinjuku Station</span>
+                        <button onclick="openModal('Shinjuku', 'Shinjuku is the beating heart of modern Tokyo. Experience breathtaking panoramic views from the Tokyo Metropolitan Government Building, savor yakitori in narrow post-war alleys, and explore the serene Shinjuku Gyoen National Garden.', 'https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=800&q=80')" class="text-tokyoRed hover:text-white text-xs font-semibold flex items-center space-x-1 transition-colors">
+                            <span>View Guide</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Shibuya -->
+            <div class="neighborhood-card group bg-tokyoCard rounded-2xl overflow-hidden border border-white/10 hover:border-tokyoRed/50 transition-all duration-300 shadow-xl flex flex-col" data-category="shibuya">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80" alt="Shibuya" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.src='https://placehold.co/800x600/1a1a1a/ffffff?text=Shibuya'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-tokyoCard via-transparent to-transparent"></div>
+                    <span class="absolute top-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-semibold text-white border border-white/10">Fashion & Energy</span>
+                    <span class="absolute top-4 right-4 bg-tokyoRed text-white px-3 py-1 rounded-lg text-xs font-bold">★ 4.9</span>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <div>
+                        <h3 class="font-display font-bold text-2xl text-white mb-2">Shibuya</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Famous for the legendary Scramble Crossing, cutting-edge fashion boutiques, and vibrant youth culture.</p>
+                    </div>
+                    <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                        <span class="text-xs text-gray-400"><i class="fa-solid fa-person-walking text-tokyoRed mr-1"></i> Scramble Crossing</span>
+                        <button onclick="openModal('Shibuya', 'Shibuya is the epicenter of fashion, youth culture, and entertainment. Witness the legendary Shibuya Scramble Crossing, visit Hachiko Memorial Statue, and take in 360-degree views from Shibuya Sky.', 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80')" class="text-tokyoRed hover:text-white text-xs font-semibold flex items-center space-x-1 transition-colors">
+                            <span>View Guide</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Asakusa -->
+            <div class="neighborhood-card group bg-tokyoCard rounded-2xl overflow-hidden border border-white/10 hover:border-tokyoRed/50 transition-all duration-300 shadow-xl flex flex-col" data-category="asakusa">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80" alt="Asakusa" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.src='https://placehold.co/800x600/1a1a1a/ffffff?text=Asakusa'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-tokyoCard via-transparent to-transparent"></div>
+                    <span class="absolute top-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-semibold text-white border border-white/10">Heritage & Temples</span>
+                    <span class="absolute top-4 right-4 bg-tokyoRed text-white px-3 py-1 rounded-lg text-xs font-bold">★ 4.8</span>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <div>
+                        <h3 class="font-display font-bold text-2xl text-white mb-2">Asakusa</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Tokyo's historic district housing Senso-ji, Tokyo's oldest Buddhist temple, and traditional Edo-period streets.</p>
+                    </div>
+                    <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                        <span class="text-xs text-gray-400"><i class="fa-solid fa-place-of-worship text-tokyoRed mr-1"></i> Senso-ji Temple</span>
+                        <button onclick="openModal('Asakusa', 'Asakusa preserves the atmosphere of Tokyo from decades past. Walk under the giant red lantern of Kaminarimon Gate, stroll down Nakamise-dori for traditional snacks, and enjoy views of the Sumida River and Tokyo Skytree.', 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=800&q=80')" class="text-tokyoRed hover:text-white text-xs font-semibold flex items-center space-x-1 transition-colors">
+                            <span>View Guide</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: Ginza -->
+            <div class="neighborhood-card group bg-tokyoCard rounded-2xl overflow-hidden border border-white/10 hover:border-tokyoRed/50 transition-all duration-300 shadow-xl flex flex-col" data-category="ginza">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1528164344705-475426879c0d?auto=format&fit=crop&w=800&q=80" alt="Ginza" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.src='https://placehold.co/800x600/1a1a1a/ffffff?text=Ginza'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-tokyoCard via-transparent to-transparent"></div>
+                    <span class="absolute top-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-semibold text-white border border-white/10">Luxury & Dining</span>
+                    <span class="absolute top-4 right-4 bg-tokyoRed text-white px-3 py-1 rounded-lg text-xs font-bold">★ 4.7</span>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <div>
+                        <h3 class="font-display font-bold text-2xl text-white mb-2">Ginza</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Tokyo's upscale shopping district boasting flagship luxury stores, Michelin-starred restaurants, and art galleries.</p>
+                    </div>
+                    <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                        <span class="text-xs text-gray-400"><i class="fa-solid fa-gem text-tokyoRed mr-1"></i> Luxury Avenue</span>
+                        <button onclick="openModal('Ginza', 'Ginza is renowned worldwide as a luxurious shopping and gastronomy destination. Marvel at striking contemporary architecture, visit the historic Kabukiza Theatre, and enjoy exquisite sushi dining.', 'https://images.unsplash.com/photo-1528164344705-475426879c0d?auto=format&fit=crop&w=800&q=80')" class="text-tokyoRed hover:text-white text-xs font-semibold flex items-center space-x-1 transition-colors">
+                            <span>View Guide</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5: Akihabara -->
+            <div class="neighborhood-card group bg-tokyoCard rounded-2xl overflow-hidden border border-white/10 hover:border-tokyoRed/50 transition-all duration-300 shadow-xl flex flex-col" data-category="akihabara">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1563859877965-4f6c4d620577?auto=format&fit=crop&w=800&q=80" alt="Akihabara" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.src='https://placehold.co/800x600/1a1a1a/ffffff?text=Akihabara'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-tokyoCard via-transparent to-transparent"></div>
+                    <span class="absolute top-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-semibold text-white border border-white/10">Anime & Electronics</span>
+                    <span class="absolute top-4 right-4 bg-tokyoRed text-white px-3 py-1 rounded-lg text-xs font-bold">★ 4.8</span>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <div>
+                        <h3 class="font-display font-bold text-2xl text-white mb-2">Akihabara</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">The global capital of anime, manga, gaming culture, and multi-story electronics and gadget emporiums.</p>
+                    </div>
+                    <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                        <span class="text-xs text-gray-400"><i class="fa-solid fa-gamepad text-tokyoRed mr-1"></i> Electric Town</span>
+                        <button onclick="openModal('Akihabara', 'Akihabara Electric Town is paradise for tech enthusiasts, gamers, and anime fans. Explore multi-level hobby stores, retro arcades, and themed cafes offering an unforgettable pop culture experience.', 'https://images.unsplash.com/photo-1563859877965-4f6c4d620577?auto=format&fit=crop&w=800&q=80')" class="text-tokyoRed hover:text-white text-xs font-semibold flex items-center space-x-1 transition-colors">
+                            <span>View Guide</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 6: Roppongi -->
+            <div class="neighborhood-card group bg-tokyoCard rounded-2xl overflow-hidden border border-white/10 hover:border-tokyoRed/50 transition-all duration-300 shadow-xl flex flex-col" data-category="shinjuku">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80" alt="Roppongi" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.src='https://placehold.co/800x600/1a1a1a/ffffff?text=Roppongi'">
+                    <div class="absolute inset-0 bg-gradient-to-t from-tokyoCard via-transparent to-transparent"></div>
+                    <span class="absolute top-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-lg text-xs font-semibold text-white border border-white/10">Art & Hills</span>
+                    <span class="absolute top-4 right-4 bg-tokyoRed text-white px-3 py-1 rounded-lg text-xs font-bold">★ 4.8</span>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                    <div>
+                        <h3 class="font-display font-bold text-2xl text-white mb-2">Roppongi Hills</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">A thriving hub for contemporary art museums, high-rise cultural complexes, and international dining.</p>
+                    </div>
+                    <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                        <span class="text-xs text-gray-400"><i class="fa-solid fa-palette text-tokyoRed mr-1"></i> Art Triangle</span>
+                        <button onclick="openModal('Roppongi Hills', 'Roppongi is Tokyo premier nightlife and art district. Visit the Mori Art Museum, experience the Tokyo City View observation deck, and enjoy vibrant international lounges.', 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80')" class="text-tokyoRed hover:text-white text-xs font-semibold flex items-center space-x-1 transition-colors">
+                            <span>View Guide</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curated Experiences Section -->
+    <section id="experiences" class="py-24 bg-[#0e0e0e] border-y border-white/5 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-tokyoRed font-semibold text-xs uppercase tracking-widest block mb-2">Unforgettable Moments</span>
+                <h2 class="font-display font-bold text-3xl sm:text-4xl text-white mb-4">Curated Experiences</h2>
+                <p class="text-gray-400 text-sm">Hand-picked activities designed to connect you deeply with Tokyo's traditions and contemporary pulse.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Experience 1 -->
+                <div class="group relative rounded-2xl overflow-hidden bg-tokyoCard border border-white/10 p-6 flex flex-col justify-between h-80 hover:border-tokyoRed/50 transition-all duration-300">
+                    <div class="absolute inset-0 bg-cover bg-center opacity-25 group-hover:opacity-40 transition-opacity duration-500" style="background-image: url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80')"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-xl bg-tokyoRed/20 border border-tokyoRed/30 flex items-center justify-center text-tokyoRed mb-4 text-xl">
+                            <i class="fa-solid fa-utensils"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-xl text-white mb-2">Omakase & Izakaya Tours</h3>
+                        <p class="text-gray-300 text-xs leading-relaxed">Savor master-crafted sushi and local delicacies guided by culinary experts in hidden alleyways.</p>
+                    </div>
+                    <div class="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between">
+                        <span class="text-xs text-tokyoRed font-semibold">From ¥12,000</span>
+                        <button onclick="showToast('Experience Selected', 'Added Omakase Tour to your wishlist.')" class="bg-white/10 hover:bg-tokyoRed text-white text-xs px-3 py-1.5 rounded-lg transition-colors">Book Slot</button>
+                    </div>
+                </div>
+
+                <!-- Experience 2 -->
+                <div class="group relative rounded-2xl overflow-hidden bg-tokyoCard border border-white/10 p-6 flex flex-col justify-between h-80 hover:border-tokyoRed/50 transition-all duration-300">
+                    <div class="absolute inset-0 bg-cover bg-center opacity-25 group-hover:opacity-40 transition-opacity duration-500" style="background-image: url('https://images.unsplash.com/photo-1528360983277-13d40169880b?auto=format&fit=crop&w=600&q=80')"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-xl bg-tokyoRed/20 border border-tokyoRed/30 flex items-center justify-center text-tokyoRed mb-4 text-xl">
+                            <i class="fa-solid fa-mug-hot"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-xl text-white mb-2">Traditional Tea Ceremony</h3>
+                        <p class="text-gray-300 text-xs leading-relaxed">Experience mindfulness and matcha preparation in a serene classical Japanese tatami tea house.</p>
+                    </div>
+                    <div class="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between">
+                        <span class="text-xs text-tokyoRed font-semibold">From ¥8,500</span>
+                        <button onclick="showToast('Experience Selected', 'Added Tea Ceremony to your wishlist.')" class="bg-white/10 hover:bg-tokyoRed text-white text-xs px-3 py-1.5 rounded-lg transition-colors">Book Slot</button>
+                    </div>
+                </div>
+
+                <!-- Experience 3 -->
+                <div class="group relative rounded-2xl overflow-hidden bg-tokyoCard border border-white/10 p-6 flex flex-col justify-between h-80 hover:border-tokyoRed/50 transition-all duration-300">
+                    <div class="absolute inset-0 bg-cover bg-center opacity-25 group-hover:opacity-40 transition-opacity duration-500" style="background-image: url('https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=600&q=80')"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-xl bg-tokyoRed/20 border border-tokyoRed/30 flex items-center justify-center text-tokyoRed mb-4 text-xl">
+                            <i class="fa-solid fa-camera-retro"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-xl text-white mb-2">Neon & Cyberpunk Photo Walk</h3>
+                        <p class="text-gray-300 text-xs leading-relaxed">Capture stunning night photography across Shinjuku and Shibuya with professional instruction.</p>
+                    </div>
+                    <div class="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between">
+                        <span class="text-xs text-tokyoRed font-semibold">From ¥10,000</span>
+                        <button onclick="showToast('Experience Selected', 'Added Photo Walk to your wishlist.')" class="bg-white/10 hover:bg-tokyoRed text-white text-xs px-3 py-1.5 rounded-lg transition-colors">Book Slot</button>
+                    </div>
+                </div>
+
+                <!-- Experience 4 -->
+                <div class="group relative rounded-2xl overflow-hidden bg-tokyoCard border border-white/10 p-6 flex flex-col justify-between h-80 hover:border-tokyoRed/50 transition-all duration-300">
+                    <div class="absolute inset-0 bg-cover bg-center opacity-25 group-hover:opacity-40 transition-opacity duration-500" style="background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=600&q=80')"></div>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-xl bg-tokyoRed/20 border border-tokyoRed/30 flex items-center justify-center text-tokyoRed mb-4 text-xl">
+                            <i class="fa-solid fa-mountain-sun"></i>
+                        </div>
+                        <h3 class="font-display font-bold text-xl text-white mb-2">Mt. Fuji & Hakone Day Trip</h3>
+                        <p class="text-gray-300 text-xs leading-relaxed">Escape the city for majestic mountain vistas, pirate ship lake cruises, and natural hot spring onsen.</p>
+                    </div>
+                    <div class="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between">
+                        <span class="text-xs text-tokyoRed font-semibold">From ¥18,000</span>
+                        <button onclick="showToast('Experience Selected', 'Added Mt. Fuji Tour to your wishlist.')" class="bg-white/10 hover:bg-tokyoRed text-white text-xs px-3 py-1.5 rounded-lg transition-colors">Book Slot</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Itinerary Planner Section -->
+    <section id="itinerary" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+            <span class="text-tokyoRed font-semibold text-xs uppercase tracking-widest block mb-2">Custom Travel Planner</span>
+            <h2 class="font-display font-bold text-3xl sm:text-4xl text-white mb-4">Interactive Itinerary Generator</h2>
+            <p class="text-gray-400 text-sm">Select your duration and unlock a perfectly optimized daily schedule crafted by local travel experts.</p>
+            
+            <!-- Duration Selector Tabs -->
+            <div class="flex justify-center space-x-3 mt-8">
+                <button onclick="loadItinerary(3)" id="btn-3d" class="itinerary-btn px-6 py-2.5 rounded-xl font-semibold text-sm bg-tokyoRed text-white shadow-lg shadow-tokyoRed/30 transition-all">3 Days</button>
+                <button onclick="loadItinerary(5)" id="btn-5d" class="itinerary-btn px-6 py-2.5 rounded-xl font-semibold text-sm bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10 transition-all">5 Days</button>
+                <button onclick="loadItinerary(7)" id="btn-7d" class="itinerary-btn px-6 py-2.5 rounded-xl font-semibold text-sm bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10 transition-all">7 Days</button>
+            </div>
+        </div>
+
+        <!-- Itinerary Output Container -->
+        <div class="glass-panel rounded-3xl p-6 sm:p-10 border border-white/10 shadow-2xl">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center pb-6 mb-8 border-b border-white/10">
+                <div>
+                    <span id="itinerary-tag" class="text-xs uppercase tracking-wider font-semibold text-tokyoRed">Recommended Schedule</span>
+                    <h3 id="itinerary-title" class="font-display font-bold text-2xl sm:text-3xl text-white mt-1">Tokyo Essentials (3 Days)</h3>
+                </div>
+                <button onclick="showToast('Itinerary Saved', 'Your personalized itinerary has been saved to your profile.')" class="mt-4 md:mt-0 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-xl text-xs font-semibold flex items-center space-x-2 transition-colors border border-white/10">
+                    <i class="fa-solid fa-bookmark"></i>
+                    <span>Save Itinerary</span>
+                </button>
+            </div>
+
+            <!-- Schedule Timeline -->
+            <div id="itinerary-content" class="space-y-6">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Practical Info & Essential Tips Section -->
+    <section id="practical" class="py-24 bg-[#0e0e0e] border-t border-white/5 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-tokyoRed font-semibold text-xs uppercase tracking-widest block mb-2">Traveler Essentials</span>
+                <h2 class="font-display font-bold text-3xl sm:text-4xl text-white mb-4">Navigating Tokyo</h2>
+                <p class="text-gray-400 text-sm">Essential tips on connectivity, transportation, and etiquette to ensure a seamless journey.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-tokyoCard border border-white/10 rounded-2xl p-8 hover:border-tokyoRed/50 transition-all">
+                    <div class="w-14 h-14 rounded-2xl bg-tokyoRed/20 border border-tokyoRed/30 flex items-center justify-center text-tokyoRed text-2xl mb-6">
+                        <i class="fa-solid fa-train-subway"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-white mb-3">Suica & Pasmo Cards</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        Load a digital Suica card directly onto your smartphone wallet (Apple/Google Pay) for instant tap-and-go access to trains, subways, convenience stores, and vending machines.
+                    </p>
+                    <span class="text-xs text-tokyoRed font-semibold flex items-center space-x-1">
+                        <i class="fa-solid fa-check mr-1"></i> Highly Recommended
+                    </span>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-tokyoCard border border-white/10 rounded-2xl p-8 hover:border-tokyoRed/50 transition-all">
+                    <div class="w-14 h-14 rounded-2xl bg-tokyoRed/20 border border-tokyoRed/30 flex items-center justify-center text-tokyoRed text-2xl mb-6">
+                        <i class="fa-solid fa-wifi"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-white mb-3">Pocket Wi-Fi & eSIM</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        Stay connected everywhere with high-speed data. Rent a pocket Wi-Fi device at Narita/Haneda airport upon arrival, or install an instant tourist eSIM before your flight.
+                    </p>
+                    <span class="text-xs text-tokyoRed font-semibold flex items-center space-x-1">
+                        <i class="fa-solid fa-check mr-1"></i> Unlimited Data Options
+                    </span>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-tokyoCard border border-white/10 rounded-2xl p-8 hover:border-tokyoRed/50 transition-all">
+                    <div class="w-14 h-14 rounded-2xl bg-tokyoRed/20 border border-tokyoRed/30 flex items-center justify-center text-tokyoRed text-2xl mb-6">
+                        <i class="fa-solid fa-handshake"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-xl text-white mb-3">Local Etiquette</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        Tipping is not practiced in Japan. Refrain from walking while eating street food, keep voice levels low on trains, and always remove your shoes when entering tatami rooms.
+                    </p>
+                    <span class="text-xs text-tokyoRed font-semibold flex items-center space-x-1">
+                        <i class="fa-solid fa-check mr-1"></i> Cultural Courtesy
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/10 pt-16 pb-12 px-4 sm:px-6 lg:px-8 text-gray-400 text-sm">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-white/10">
+            <div class="space-y-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-lg bg-tokyoRed flex items-center justify-center text-white font-display font-bold text-base">
+                        京
+                    </div>
+                    <span class="font-display font-extrabold text-lg text-white">TOKYO<span class="text-tokyoRed">ODYSSEY</span></span>
+                </div>
+                <p class="text-xs text-gray-400 leading-relaxed">
+                    Your premier digital companion for exploring the endless wonders, districts, and hidden gems of Tokyo, Japan.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="font-display font-bold text-white mb-4 text-xs uppercase tracking-wider">Top Neighborhoods</h4>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="#destinations" class="hover:text-white transition-colors">Shinjuku Neon & Nightlife</a></li>
+                    <li><a href="#destinations" class="hover:text-white transition-colors">Shibuya Scramble & Fashion</a></li>
+                    <li><a href="#destinations" class="hover:text-white transition-colors">Asakusa Historic Temples</a></li>
+                    <li><a href="#destinations" class="hover:text-white transition-colors">Ginza Luxury Shopping</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-display font-bold text-white mb-4 text-xs uppercase tracking-wider">Curated Tours</h4>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="#experiences" class="hover:text-white transition-colors">Omakase Culinary Tours</a></li>
+                    <li><a href="#experiences" class="hover:text-white transition-colors">Traditional Tea Ceremony</a></li>
+                    <li><a href="#experiences" class="hover:text-white transition-colors">Cyberpunk Photo Walks</a></li>
+                    <li><a href="#experiences" class="hover:text-white transition-colors">Mt. Fuji Day Excursions</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-display font-bold text-white mb-4 text-xs uppercase tracking-wider">Newsletter</h4>
+                <p class="text-xs text-gray-400 mb-4">Receive monthly guides on seasonal sakura blossoms, autumn foliage, and secret spots.</p>
+                <form onsubmit="event.preventDefault(); showToast('Subscribed!', 'Thank you for subscribing to Tokyo Odyssey newsletter.');" class="space-y-2">
+                    <input type="email" placeholder="Enter your email" required class="w-full bg-tokyoCard border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-tokyoRed">
+                    <button type="submit" class="w-full bg-tokyoRed hover:bg-tokyoRed/90 text-white font-semibold py-2 rounded-xl text-xs transition-colors">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500">
+            <p>&copy; 2026 Tokyo Odyssey Tourism Board. All rights reserved.</p>
+            <div class="flex space-x-6 mt-4 sm:mt-0">
+                <a href="#" class="hover:text-gray-300">Privacy Policy</a>
+                <a href="#" class="hover:text-gray-300">Terms of Service</a>
+                <a href="#" class="hover:text-gray-300">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Neighborhood Details Modal -->
+    <div id="guide-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+        <div class="glass-panel max-w-lg w-full rounded-3xl overflow-hidden border border-white/20 shadow-2xl transform transition-all">
+            <div class="relative h-56">
+                <img id="modal-img" src="" alt="Neighborhood Guide" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-tokyoDark via-transparent to-transparent"></div>
+                <button onclick="closeModal()" class="absolute top-4 right-4 bg-black/60 hover:bg-tokyoRed text-white w-9 h-9 rounded-full flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <h3 id="modal-title" class="absolute bottom-4 left-6 font-display font-bold text-2xl text-white">Neighborhood</h3>
+            </div>
+            <div class="p-6 space-y-4">
+                <p id="modal-desc" class="text-gray-300 text-sm leading-relaxed"></p>
+                <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                    <span class="text-xs text-gray-400"><i class="fa-solid fa-circle-check text-tokyoRed mr-1"></i> Verified Local Guide</span>
+                    <button onclick="closeModal(); showToast('Guide Downloaded', 'PDF guide saved successfully.')" class="bg-tokyoRed hover:bg-tokyoRed/90 text-white px-4 py-2 rounded-xl text-xs font-semibold transition-colors">
+                        Download PDF Guide
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Live Tokyo Clock & Weather Simulator
+        function updateTokyoTime() {
+            const now = new Date();
+            // Tokyo is UTC+9
+            const options = { timeZone: 'Asia/Tokyo', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+            const timeString = new Intl.DateTimeFormat('en-US', options).format(now);
+            document.getElementById('tokyo-time').innerText = `Tokyo ${timeString} JST`;
+        }
+        setInterval(updateTokyoTime, 1000);
+        updateTokyoTime();
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Toast notification system
+        function showToast(title, message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-title').innerText = title;
+            document.getElementById('toast-message').innerText = message;
+            
+            toast.classList.remove('translate-y-32', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-32', 'opacity-0');
+            }, 3500);
+        }
+
+        // Neighborhood Filter functionality
+        function filterNeighborhoods(category) {
+            const pills = document.querySelectorAll('.neighborhood-pill');
+            pills.forEach(p => {
+                p.classList.remove('bg-tokyoRed', 'text-white');
+                p.classList.add('bg-white/5', 'text-gray-300');
+            });
+            event.target.classList.remove('bg-white/5', 'text-gray-300');
+            event.target.classList.add('bg-tokyoRed', 'text-white');
+
+            const cards = document.querySelectorAll('.neighborhood-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Hero search filter simulation
+        function filterAttractions() {
+            const area = document.getElementById('hero-area-filter').value;
+            const type = document.getElementById('hero-type-filter').value;
+            showToast('Filter Applied', `Showing results for area: ${area.toUpperCase()}`);
+            
+            // Scroll smoothly to destinations section
+            document.getElementById('destinations').scrollIntoView({ behavior: 'smooth' });
+            
+            if (area !== 'all') {
+                const cards = document.querySelectorAll('.neighborhood-card');
+                cards.forEach(card => {
+                    if (card.getAttribute('data-category') === area) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+        }
+
+        // Modal Controls
+        function openModal(title, desc, imgUrl) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-desc').innerText = desc;
+            document.getElementById('modal-img').src = imgUrl;
+            document.getElementById('guide-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('guide-modal').classList.add('hidden');
+        }
+
+        // Interactive Itinerary Generator Data & Function
+        const itineraries = {
+            3: [
+                { day: "Day 1", title: "Neon Pulse & City Views", desc: "Morning arrival, check-in. Afternoon stroll through bustling Shinjuku and Omoide Yokocho alleyways. Evening panoramic views from Tokyo Metropolitan Government Building." },
+                { day: "Day 2", title: "Tradition & Pop Culture", desc: "Morning visit to Senso-ji Temple in Asakusa. Afternoon exploration of Akihabara anime shops and retro arcades. Evening dinner in Ginza." },
+                { day: "Day 3", title: "Shibuya Crossing & Farewell", desc: "Morning at Meiji Shrine & Harajuku Takeshita Street. Afternoon crossing the famous Shibuya Scramble and shopping at Shibuya Sky observatory before departure." }
+            ],
+            5: [
+                { day: "Day 1", title: "Arrival & Shinjuku Neon", desc: "Check-in at hotel, evening ramen in Shinjuku and Kabukicho neon exploration." },
+                { day: "Day 2", title: "Historic Asakusa & Ueno", desc: "Senso-ji Temple, Nakamise street snacks, Ueno Park museums and Ameyoko market." },
+                { day: "Day 3", title: "Modern Shibuya & Harajuku", desc: "Meiji Shrine, trendy Takeshita Street boutiques, Shibuya Scramble Crossing, and Shibuya Sky sunset." },
+                { day: "Day 4", title: "Luxury Ginza & Art", desc: "Ginza upscale shopping district, Tsukiji Outer Market seafood brunch, and Mori Art Museum in Roppongi." },
+                { day: "Day 5", title: "Day Trip to Kamakura", desc: "Quick train trip to Kamakura to see the Great Buddha and beautiful seaside temples." }
+            ],
+            7: [
+                { day: "Day 1", title: "Welcome to Tokyo", desc: "Arrival, airport express train, evening dinner in Shinjuku." },
+                { day: "Day 2", title: "Edo Heritage (Asakusa)", desc: "Senso-ji, Sumida river boat cruise, Skytree observation deck." },
+                { day: "Day 3", title: "Pop Culture Capital", desc: "Akihabara electronics town, maid cafe experience, retro gaming arcades." },
+                { day: "Day 4", title: "Fashion & Youth Culture", desc: "Harajuku fashion streets, Meiji Shrine sanctuary, Omotesando luxury architecture." },
+                { day: "Day 5", title: "Culinary & Waterfront", desc: "Tsukiji fish market breakfast, Ginza shopping, teamLab Planets immersive digital art museum." },
+                { day: "Day 6", title: "Mt. Fuji & Hakone Excursion", desc: "Day trip for majestic mountain views, pirate ship cruise on Lake Ashi, and hot spring onsen." },
+                { day: "Day 7", title: "Souvenir Shopping & Farewell", desc: "Last-minute shopping in Shibuya or Tokyo Station Character Street, departure." }
+            ]
+        };
+
+        function loadItinerary(days) {
+            // Update active button state
+            document.querySelectorAll('.itinerary-btn').forEach(btn => {
+                btn.classList.remove('bg-tokyoRed', 'text-white', 'shadow-lg', 'shadow-tokyoRed/30');
+                btn.classList.add('bg-white/5', 'text-gray-300');
+            });
+            const activeBtn = document.getElementById(`btn-${days}d`);
+            activeBtn.classList.remove('bg-white/5', 'text-gray-300');
+            activeBtn.classList.add('bg-tokyoRed', 'text-white', 'shadow-lg', 'shadow-tokyoRed/30');
+
+            // Update Header text
+            document.getElementById('itinerary-title').innerText = `Tokyo Highlights (${days} Days Schedule)`;
+
+            // Render schedule
+            const container = document.getElementById('itinerary-content');
+            const data = itineraries[days];
+            
+            let html = '';
+            data.forEach((item, index) => {
+                html += `
+                    <div class="flex items-start space-x-4 pb-6 ${index !== data.length - 1 ? 'border-b border-white/10' : ''}">
+                        <div class="w-24 shrink-0">
+                            <span class="inline-block px-3 py-1 rounded-lg bg-tokyoRed/20 text-tokyoRed font-bold text-xs border border-tokyoRed/30">${item.day}</span>
+                        </div>
+                        <div>
+                            <h4 class="font-display font-bold text-lg text-white mb-1">${item.title}</h4>
+                            <p class="text-gray-400 text-sm leading-relaxed">${item.desc}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        // Initialize default 3-day itinerary on load
+        loadItinerary(3);
+    </script>
+</body>
+</html>
