@@ -1,337 +1,468 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Virocchan S.Elankoven | Selected Work</title>
-<meta name="description" content="Portfolio of Virocchan S.Elankoven: a Tokyo travel guide, a Malaysia population dashboard and a Langkawi beach house website.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='34' fill='%232f3dff'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=Instrument+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
-<style>
-/* ============ 1. TOKENS ============ */
-:root{
-  --bg:#f6f7f9; --surface:#ffffff; --ink:#0d1117; --muted:#5b6574; --line:#e1e4ea;
-  --accent:#2f3dff; --on-accent:#ffffff;
-  --display:"Bricolage Grotesque","Instrument Sans",system-ui,sans-serif;
-  --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  --ease:cubic-bezier(.2,.7,.2,1);
-  --pad:clamp(20px,5vw,64px);
-}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --bg:#0a0c11; --surface:#10131a; --ink:#f2f4f8; --muted:#8e97a7; --line:#1d222c;
-    --accent:#8d98ff; --on-accent:#0a0c11;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0a0c11; --surface:#10131a; --ink:#f2f4f8; --muted:#8e97a7; --line:#1d222c;
-  --accent:#8d98ff; --on-accent:#0a0c11;
-}
-
-/* ============ 2. BASE ============ */
-*{box-sizing:border-box;margin:0}
-:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-html{scroll-behavior:smooth;scroll-padding-top:90px}
-body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:1.05rem;line-height:1.65;-webkit-font-smoothing:antialiased;transition:background .4s,color .4s}
-a{color:inherit;text-decoration:none}
-img,video,svg{display:block;max-width:100%}
-:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:6px}
-.wrap{max-width:1240px;margin:0 auto;padding:0 var(--pad)}
-
-/* ============ 3. HEADER ============ */
-header{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .3s}
-header.scrolled{border-color:var(--line)}
-.bar{display:flex;align-items:center;justify-content:space-between;height:68px}
-.mark{font-family:var(--display);font-weight:700;letter-spacing:-.02em;display:flex;align-items:center;gap:10px}
-.mark i{width:10px;height:10px;border-radius:50%;background:var(--accent)}
-.bar nav{display:flex;align-items:center;gap:28px;font-size:.95rem;color:var(--muted)}
-.bar nav a{transition:color .2s}
-.bar nav a:hover{color:var(--ink)}
-.theme{font:inherit;font-size:.85rem;color:var(--ink);background:none;border:1px solid var(--line);border-radius:99px;padding:6px 14px;cursor:pointer;transition:border-color .2s}
-.theme:hover{border-color:var(--accent)}
-
-/* ============ 4. HERO ============ */
-/* ---- background: faint dot grid + AI network ---- */
-body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:radial-gradient(var(--line) 1.2px,transparent 1.3px);background-size:30px 30px;-webkit-mask-image:linear-gradient(#000,transparent 85%);mask-image:linear-gradient(#000,transparent 85%)}
-#net{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-
-.hero{position:relative;min-height:calc(100svh - 68px);display:flex;flex-direction:column;justify-content:center;padding:60px 0 80px;overflow:hidden}
-.glow{position:absolute;width:620px;height:620px;border-radius:50%;pointer-events:none;left:var(--mx,70%);top:var(--my,30%);transform:translate(-50%,-50%);background:radial-gradient(closest-side,color-mix(in srgb,var(--accent) 22%,transparent),transparent);transition:left .6s var(--ease),top .6s var(--ease)}
-.hero .wrap{position:relative}
-.hero h1{font-family:var(--display);font-weight:800;font-size:clamp(3.2rem,12.5vw,10.5rem);line-height:.92;letter-spacing:-.055em}
-.hero h1 span{display:block;overflow:hidden;padding-bottom:.06em}
-.hero h1 b{display:block;font-weight:inherit;transform:translateY(105%);animation:rise 1.1s var(--ease) forwards}
-.hero h1 span:nth-child(2) b{animation-delay:.12s;color:var(--accent)}
-@keyframes rise{to{transform:none}}
-.hero .role{margin-top:clamp(28px,4vw,48px);max-width:34ch;font-size:clamp(1.1rem,2vw,1.4rem);color:var(--muted);opacity:0;animation:fade .9s .6s var(--ease) forwards}
-.hero .role strong{color:var(--ink);font-weight:500}
-.cue{position:absolute;left:var(--pad);bottom:28px;font-size:.85rem;color:var(--muted);display:flex;align-items:center;gap:12px;opacity:0;animation:fade .9s 1s forwards}
-.cue::before{content:"";width:1px;height:36px;background:linear-gradient(var(--accent),transparent)}
-@keyframes fade{to{opacity:1}}
-
-/* ============ 5. PROJECTS ============ */
-.work{padding:40px 0 60px}
-.work-head{display:flex;align-items:baseline;justify-content:space-between;gap:20px;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:clamp(40px,8vw,100px)}
-.work-head h2{font-family:var(--display);font-weight:700;font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-.03em}
-.work-head p{color:var(--muted);font-size:.95rem}
-.project{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(24px,4vw,64px);align-items:center;margin-bottom:clamp(72px,12vw,160px)}
-.preview{grid-column:1/8;position:relative;display:block;aspect-ratio:16/10;border-radius:22px;overflow:hidden;background:var(--surface);border:1px solid var(--line);isolation:isolate}
-.project:nth-child(odd) .preview{grid-column:6/13;grid-row:1}
-.project:nth-child(odd) .info{grid-column:1/6;grid-row:1}
-.info{grid-column:8/13}
-.preview>img,.preview>video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease),opacity .6s}
-.preview:hover>img,.preview:hover>video{transform:scale(1.045)}
-.preview::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,rgba(5,8,15,.5));opacity:0;transition:opacity .4s;z-index:1}
-.preview:hover::after,.preview:focus-visible::after{opacity:1}
-.open{position:absolute;right:18px;bottom:18px;z-index:2;background:var(--accent);color:var(--on-accent);font-weight:600;font-size:.9rem;padding:10px 18px;border-radius:99px;opacity:0;transform:translateY(8px);transition:.4s var(--ease)}
-.preview:hover .open,.preview:focus-visible .open{opacity:1;transform:none}
-@media (hover:none){.open{opacity:1;transform:none}}
-.label{display:inline-flex;align-items:center;gap:10px;font-size:.9rem;color:var(--muted);margin-bottom:18px}
-.label::before{content:"";width:22px;height:2px;background:var(--accent)}
-.info h3{font-family:var(--display);font-weight:700;font-size:clamp(2rem,4vw,3.2rem);line-height:1.02;letter-spacing:-.04em;margin-bottom:18px}
-.info p{color:var(--muted);max-width:44ch}
-.facts{list-style:none;padding:0;margin:26px 0 30px;border-top:1px solid var(--line)}
-.facts li{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);font-size:.95rem}
-.facts span{color:var(--muted)}
-.facts b{font-weight:500;text-align:right}
-.go{display:inline-flex;align-items:center;gap:10px;font-weight:600;border-bottom:2px solid var(--accent);padding-bottom:3px;transition:gap .3s var(--ease),color .2s}
-.go:hover{gap:16px;color:var(--accent)}
-
-/* dashboard preview (lab 2) */
-.chart{position:absolute;inset:0;padding:clamp(18px,3vw,34px);display:flex;flex-direction:column;justify-content:space-between;background:var(--surface)}
-.kpis{display:flex;gap:clamp(20px,4vw,48px)}
-.kpis div{font-size:.8rem;color:var(--muted)}
-.kpis strong{display:block;font-family:var(--display);font-size:clamp(1.6rem,3.6vw,2.7rem);line-height:1;letter-spacing:-.04em;color:var(--ink);font-weight:700;margin-top:4px}
-.kpis div:last-child strong{color:var(--accent)}
-.chart svg{width:100%;height:auto;overflow:visible}
-.chart .ln{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
-.chart .ar{fill:var(--accent);opacity:0;transition:opacity 1s 1.2s}
-.chart .gr{stroke:var(--line);stroke-width:1}
-.chart .ax{fill:var(--muted);font-size:11px;font-family:var(--body)}
-.in .chart .ln{animation:draw 2s .3s var(--ease) forwards}
-.in .chart .ar{opacity:.1}
-@keyframes draw{to{stroke-dashoffset:0}}
-
-/* ============ 6. ABOUT + FOOTER ============ */
-.about{border-top:1px solid var(--line);padding:clamp(60px,10vw,120px) 0}
-.about .wrap{display:grid;grid-template-columns:repeat(12,1fr);gap:24px}
-.about h2{grid-column:1/5;font-family:var(--display);font-weight:700;font-size:1.3rem;letter-spacing:-.02em}
-.about p{grid-column:5/13;font-family:var(--display);font-weight:500;font-size:clamp(1.4rem,3vw,2.2rem);line-height:1.25;letter-spacing:-.03em;max-width:28em}
-.about p em{font-style:normal;color:var(--muted)}
-footer{border-top:1px solid var(--line);padding:28px 0 36px;color:var(--muted);font-size:.9rem}
-footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-
-/* ============ 7. MOTION + RESPONSIVE ============ */
-.js .reveal{opacity:0;transform:translateY(34px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
-.js .reveal.in{opacity:1;transform:none}
-@media (max-width:900px){
-  .preview,.project:nth-child(odd) .preview{grid-column:1/-1;grid-row:1}
-  .info,.project:nth-child(odd) .info{grid-column:1/-1;grid-row:2}
-  .about h2,.about p{grid-column:1/-1}
-  .bar nav a{display:none}
-}
-@media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
-  .hero h1 b{transform:none}
-  .js .reveal{opacity:1;transform:none}
-}
-</style>
+<meta charset="utf-8">
+<title>Virocchan Elankoven</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
 </head>
 <body>
-<script>document.documentElement.classList.add('js')</script>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;700;800&amp;display=swap">
+<style>
+body{margin:0;font-family:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif;color:#0A1F44;background:#F5F7FB;line-height:1.55;font-size:17px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 32px}
+.sec{padding-top:96px}
+h1,h2,h3,p,ul,dl,dd{margin:0}
+h1,h2,h3{line-height:1.08;letter-spacing:-0.02em}
+h2{font-size:40px;font-weight:700;margin-bottom:32px}
+h3{font-size:22px;font-weight:700;letter-spacing:-0.01em}
+a{color:inherit}
+a:focus-visible{outline:3px solid #2457F5;outline-offset:3px}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 26px;border-radius:999px;font-weight:700;font-size:16px;text-decoration:none}
+.btn-p{background:#2457F5;color:#fff}
+.btn-p:hover{background:#1A43C7}
+.btn-s{border:2px solid #0A1F44;color:#0A1F44}
+.btn-s:hover{background:#0A1F44;color:#fff}
+.link{color:#1A43C7;font-weight:700}
+.muted{color:#4A5878}
+.row{display:grid;grid-template-columns:1fr 2fr;gap:24px;padding:22px 0;border-top:1px solid #C3CFE6}
+.row3{grid-template-columns:1.2fr 3fr auto;align-items:baseline}
+.navlink{text-decoration:none;font-weight:500;padding:12px 4px}
+.navlink:hover{color:#2457F5}
+ul.plain{list-style:none;padding:0}
+ul.plain li{padding:10px 0;border-top:1px solid #C3CFE6}
+@media(max-width:640px){.wrap{padding:0 20px}h2{font-size:32px}.row,.row3{grid-template-columns:1fr;gap:6px}.sec{padding-top:72px}}
 
-<header id="top">
-  <div class="wrap bar">
-    <a class="mark" href="#top"><i></i>Virocchan S.Elankoven</a>
-    <nav aria-label="Primary">
-      <a href="#work">Projects</a>
-      <a href="#about">About</a>
-      <button class="theme" id="theme" aria-label="Switch between light and dark mode">Dark mode</button>
-    </nav>
-  </div>
+html{scroll-behavior:smooth}
+[id]{scroll-margin-top:24px}
+
+@keyframes fadeup{from{opacity:0;transform:translateY(20px)}}
+@keyframes photoin{from{opacity:0;transform:translateY(28px) scale(.97)}}
+@keyframes settle{from{transform:scale(1.07)}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(25,178,138,.55)}70%,100%{box-shadow:0 0 0 10px rgba(25,178,138,0)}}
+@keyframes rise{from{opacity:0;transform:translateY(28px)}}
+
+header>div:first-child>*{animation:fadeup .8s cubic-bezier(.2,.7,.2,1) backwards}
+header>div:first-child>:nth-child(2){animation-delay:.12s}
+header>div:first-child>:nth-child(3){animation-delay:.24s}
+header>div:first-child>:nth-child(4){animation-delay:.34s}
+header>div:first-child>:nth-child(5){animation-delay:.44s}
+header>div:last-of-type{animation:photoin 1s cubic-bezier(.2,.7,.2,1) .2s backwards}
+header img{animation:settle 1.6s cubic-bezier(.2,.7,.2,1) .2s backwards}
+header p span{animation:pulse 2.6s ease-out 1.2s infinite}
+
+@supports (animation-timeline:view()){
+.sec>h2,#work>h3,.sec article,.row,#build>div>div,#build>div:last-child,#about>div>div,.sec>div>div>h2,.sec>div>div>ul,footer .wrap>*,section[aria-label="Highlights"]>div>div{animation:rise linear backwards;animation-timeline:view();animation-range:entry 0% entry 45%}
+section[aria-label="Highlights"]>div>div:nth-child(2),#work article:nth-child(2),#build>div>div:nth-child(2){animation-range:entry 6% entry 51%}
+section[aria-label="Highlights"]>div>div:nth-child(3),#build>div>div:nth-child(3){animation-range:entry 12% entry 57%}
+section[aria-label="Highlights"]>div>div:nth-child(4){animation-range:entry 18% entry 63%}
+#websites article:nth-child(2){animation-range:entry 6% entry 51%}
+#websites article:nth-child(3){animation-range:entry 12% entry 57%}
+}
+
+.btn{transition:background-color .2s,color .2s,translate .2s,box-shadow .2s}
+.btn:hover{translate:0 -2px;box-shadow:0 10px 22px -8px rgba(10,31,68,.35)}
+.btn:active{translate:0 0;box-shadow:none}
+article{transition:translate .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s}
+article:hover{translate:0 -6px;box-shadow:0 28px 48px -24px rgba(10,31,68,.4)}
+.link,article a[href]{text-decoration:none;background:linear-gradient(currentColor,currentColor) left 100%/100% 1px no-repeat;padding-bottom:2px;transition:background-size .25s}
+.link:hover,article a[href]:hover{background-size:100% 3px}
+.row3>:first-child{transition:translate .25s}
+.row3:hover>:first-child{translate:6px 0}
+.row h3{transition:color .2s}
+.row:hover h3{color:#2457F5}
+.navlink{transition:color .2s}
+
+html,body{overflow-x:clip}
+body{position:relative;isolation:isolate}
+body::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:radial-gradient(circle,rgba(10,31,68,.16) 1.2px,transparent 1.6px);background-size:26px 26px;-webkit-mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 45%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,rgba(0,0,0,.55) 45%,transparent 100%)}
+#top{position:relative}
+#top>div{position:relative;z-index:1}
+#nn-canvas{position:absolute;z-index:0;top:-24px;height:calc(100% + 80px);left:50%;width:100vw;transform:translateX(-50%);pointer-events:none;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 14%,#000 70%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 14%,#000 70%,transparent 100%)}
+
+.pv img{transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.pv:hover img{transform:scale(1.045)}
+
+@media(prefers-color-scheme:dark){
+body{background:#0A1426;color:#E8EEFA}
+body::before{background-image:radial-gradient(circle,rgba(170,195,255,.16) 1.2px,transparent 1.6px)}
+.muted{color:#A3B3D2}
+.row,ul.plain li{border-top-color:#2A4170}
+[style*="border-bottom:1px solid #C3CFE6"]{border-bottom-color:#2A4170!important}
+[style*="border-top:2px solid #0A1F44"]{border-top-color:#E8EEFA!important}
+.btn-s{border-color:#E8EEFA;color:#E8EEFA}
+.btn-s:hover{background:#E8EEFA;color:#0A1F44}
+.link,.row:hover h3,.navlink:hover{color:#8FB0FF}
+[style*="background:#DCE6F8;padding"]{background:#16294D!important;color:#E8EEFA}
+article[style*="background:#0A1F44"]{background:#12295A!important}
+article[style*="background:#DCE6F8"]{color:#0A1F44}
+article[style*="background:#DCE6F8"] .link{color:#1A43C7}
+footer{background:#050D1B!important}
+article[style*="background:#fff"]{background:#10192E!important;border-color:#2A4170!important}
+}
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.btn:hover,article:hover,.row3:hover>:first-child{translate:none!important}}
+</style>
+</helmet>
+
+<div>
+<div class="wrap" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 24px;padding-top:24px;padding-bottom:24px">
+<a href="#top" style="font-weight:800;font-size:19px;text-decoration:none;letter-spacing:-0.01em">Virocchan S.Elankoven</a>
+<nav aria-label="Main" style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px">
+<a class="navlink" href="#work">Work</a>
+<a class="navlink" href="#build">Freelance</a>
+<a class="navlink" href="#about">About</a>
+<a class="btn btn-p" href="mailto:virocchanelan@gmail.com">Email me</a>
+</nav>
+</div>
+
+<header id="top" class="wrap" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:48px;align-items:center;padding-top:32px">
+<div>
+<p style="display:inline-flex;align-items:center;gap:10px;background:#DCE6F8;padding:8px 16px;border-radius:999px;font-weight:500;font-size:15px">
+<span aria-hidden="true" style="width:10px;height:10px;border-radius:50%;background:#19B28A;display:inline-block"></span>Available for freelance projects</p>
+<h1 style="font-size:clamp(44px,6.2vw,76px);font-weight:800;margin-top:24px">Virocchan S.Elankoven</h1>
+<p style="font-size:clamp(22px,2.4vw,28px);font-weight:500;margin-top:20px;max-width:26em;line-height:1.3">I build AI tools, websites and business systems, from the model to the hardware to the web app.</p>
+<p class="muted" style="margin-top:20px;max-width:34em">Bachelor of Artificial Intelligence student at Universiti Teknologi Malaysia. Lead developer of MediProof, champion of GDGoC MMU Hackathon Sedia! 2026.</p>
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:32px">
+<a class="btn btn-p" href="mailto:virocchanelan@gmail.com">Email me</a>
+<a class="btn btn-s" href="https://www.linkedin.com/in/virocchan/">LinkedIn</a>
+</div>
+</div>
+<div style="background:#DCE6F8;border-radius:32px;overflow:hidden;max-width:480px;width:100%;justify-self:center">
+<img src="./assets/bdd6cfb0bcdd17843461f86f70c70cfe.jpg" alt="Portrait of Virocchan Elankoven in a navy suit and blue tie, arms crossed, smiling" style="display:block;width:100%;height:auto;mix-blend-mode:multiply">
+</div>
+<canvas id="nn-canvas" ref="{{ cvRef }}" aria-hidden="true"></canvas>
 </header>
 
-<main>
-  <section class="hero">
-    <div class="glow" id="glow" aria-hidden="true"></div>
-    <canvas id="net" aria-hidden="true"></canvas>
-    <div class="wrap">
-      <h1 aria-label="Virocchan S.Elankoven"><span><b>Virocchan</b></span><span><b>S.Elankoven</b></span></h1>
-      <p class="role"><strong>AI student</strong> who builds interactive websites with data and design.</p>
-    </div>
-    <a class="cue" href="#work">Selected work</a>
-  </section>
+<section class="wrap" aria-label="Highlights" style="margin-top:72px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));border-top:2px solid #0A1F44;border-bottom:1px solid #C3CFE6">
+<div style="padding:24px 24px 24px 0"><p style="font-size:30px;font-weight:800;letter-spacing:-0.02em">Champion</p><p class="muted" style="font-size:15px">GDGoC MMU Hackathon Sedia! 2026</p></div>
+<div style="padding:24px 24px 24px 0"><p style="font-size:30px;font-weight:800;letter-spacing:-0.02em">4.00 / 4.00</p><p class="muted" style="font-size:15px">GPA, Bachelor of AI with Honours</p></div>
+<div style="padding:24px 24px 24px 0"><p style="font-size:30px;font-weight:800;letter-spacing:-0.02em">2027</p><p class="muted" style="font-size:15px">Expected graduation, UTM</p></div>
+<div style="padding:24px 0"><p style="font-size:30px;font-weight:800;letter-spacing:-0.02em">About 250</p><p class="muted" style="font-size:15px">primary-school students taught across seven schools</p></div>
+</div>
+</section>
 
-  <section class="work" id="work">
-    <div class="wrap">
-      <div class="work-head reveal"><h2>Selected work</h2><p>Three projects</p></div>
+<section id="work" class="wrap sec">
+<h2>Selected work</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px">
 
-      <!-- Lab 1 -->
-      <article class="project reveal">
-        <a class="preview" href="lab1/index.html" aria-label="Open Tokyo Odyssey">
-          <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="Tokyo street at night, from the Tokyo Odyssey travel site" loading="lazy" onerror="this.style.display='none'">
-          <span class="open">Open project</span>
-        </a>
-        <div class="info">
-          <div class="label">Lab 1</div>
-          <h3>Tokyo Odyssey</h3>
-          <p>A travel guide that walks through Tokyo’s neighborhoods, from Shinjuku and Shibuya to Asakusa, with curated experiences and an itinerary generator.</p>
-          <ul class="facts">
-            <li><span>Explore</span><b>6 neighborhoods</b></li>
-            <li><span>Feature</span><b>Itinerary generator</b></li>
-            <li><span>Built with</span><b>HTML, Tailwind CSS</b></li>
-          </ul>
-          <a class="go" href="lab1/index.html">View project <span aria-hidden="true">→</span></a>
-        </div>
-      </article>
+<article style="background:#0A1F44;color:#F5F7FB;border-radius:28px;padding:40px">
+<h3 style="font-size:40px;font-weight:800">MediProof</h3>
+<p style="font-size:19px;font-weight:500;margin-top:8px;color:#C9D8F6">Health misinformation fact-checker</p>
+<p style="margin-top:20px;color:#DCE6F8">Checks a health claim from text, a voice note or a photo of an infographic, then answers with citations from WHO, CDC, PubMed, NIH and Cochrane.</p>
+<ul class="plain" style="margin-top:24px;color:#DCE6F8">
+<li style="border-color:#2D4573">Retrieval-augmented pipeline built on n8n and Gemini 2.5 Flash</li>
+<li style="border-color:#2D4573">Answers translated into nine languages, including Malay, Chinese and Tamil</li>
+<li style="border-color:#2D4573">Chrome extension: highlight a claim on TikTok, X, Facebook or WhatsApp Web and check it in one click</li>
+</ul>
+<p style="margin-top:24px;color:#C9D8F6;font-size:15px">Lead Developer, Team 110011. Champion at Sedia! 2026, built for UN SDG 3.</p>
+<p style="margin-top:20px"><a href="https://github.com/Virocchan/MediProof" style="color:#fff;font-weight:700">View repository on GitHub</a></p>
+</article>
 
-      <!-- Lab 2 -->
-      <article class="project reveal">
-        <a class="preview" href="lab2/index.html" aria-label="Open Malaysia Demographic Intelligence dashboard">
-          <div class="chart" aria-hidden="true">
-            <div class="kpis"><div>2026<strong>34.39M</strong></div><div>2050 projected<strong>41.19M</strong></div></div>
-            <svg id="spark" viewBox="0 0 560 190" preserveAspectRatio="none">
-              <line class="gr" x1="0" y1="188" x2="560" y2="188"/><line class="gr" x1="0" y1="95" x2="560" y2="95"/>
-              <path class="ar" id="area"/><path class="ln" id="line" pathLength="1"/>
-            </svg>
-          </div>
-          <span class="open">Open project</span>
-        </a>
-        <div class="info">
-          <div class="label">Lab 2</div>
-          <h3>Malaysia Demographic Intelligence</h3>
-          <p>A population dashboard covering 1970 to 2050. Six interactive charts track growth, age groups and ethnic composition, followed by policy insights.</p>
-          <ul class="facts">
-            <li><span>Growth</span><b>+0.75% per year</b></li>
-            <li><span>Charts</span><b>6, interactive</b></li>
-            <li><span>Built with</span><b>HTML, Chart.js</b></li>
-          </ul>
-          <a class="go" href="lab2/index.html">View project <span aria-hidden="true">→</span></a>
-        </div>
-      </article>
+<article style="background:#DCE6F8;border-radius:28px;padding:40px">
+<h3 style="font-size:40px;font-weight:800">SPENZER</h3>
+<p style="font-size:19px;font-weight:500;margin-top:8px">Smart medicine dispenser for elder care</p>
+<p style="margin-top:20px">Identifies pills with a camera and hands them out from a motor-driven carousel, with a web interface for monitoring.</p>
+<ul class="plain" style="margin-top:24px">
+<li style="border-color:#B3C4E6">Custom YOLO pill-detection model, deployed as ONNX and TensorFlow Lite</li>
+<li style="border-color:#B3C4E6">ESP32-S3 with motor control running the dispensing carousel</li>
+<li style="border-color:#B3C4E6">WebSocket link carrying device commands and telemetry to the backend</li>
+</ul>
+<p style="margin-top:24px;color:#33425F;font-size:15px">Built for the UTM AI Showcase.</p>
+<p style="margin-top:20px"><a class="link" href="https://github.com/Virocchan">View on GitHub</a></p>
+</article>
+</div>
 
-      <!-- Lab 3 -->
-      <article class="project reveal">
-        <a class="preview" href="lab3/homestay-vsla-website/index.html" aria-label="Open Homestay Vsla website" id="vsla">
-          <img src="lab3/homestay-vsla-website/images/hero.jpg" alt="Homestay Vsla at Pantai Cenang, Langkawi, at sunset" loading="lazy">
-          <video muted loop playsinline preload="none" poster="lab3/homestay-vsla-website/images/hero.jpg" aria-hidden="true"><source src="lab3/homestay-vsla-website/videos/vslateaser.mp4" type="video/mp4"></video>
-          <span class="open">Open project</span>
-        </a>
-        <div class="info">
-          <div class="label">Lab 3</div>
-          <h3>Homestay Vsla</h3>
-          <p>A website for a private beachfront house at Pantai Cenang, Langkawi. It has four bedrooms, space for 15 guests, a video hero and a booking bar.</p>
-          <ul class="facts">
-            <li><span>Pages</span><b>Home, gallery, explore, book</b></li>
-            <li><span>Highlight</span><b>Video hero, scroll motion</b></li>
-            <li><span>Built with</span><b>HTML, CSS, JavaScript</b></li>
-          </ul>
-          <a class="go" href="lab3/homestay-vsla-website/index.html">View project <span aria-hidden="true">→</span></a>
-        </div>
-      </article>
-    </div>
-  </section>
+<h3 style="margin-top:64px;margin-bottom:12px">More projects</h3>
+<div>
+<div class="row row3"><a class="link" href="https://github.com/Virocchan/VitaSync">VitaSync</a><p>An AI-integrated health monitoring app.</p><p class="muted" style="font-size:15px">Dart</p></div>
+<div class="row row3"><a class="link" href="https://github.com/Virocchan/Optify">Optify</a><p>Upload a retinal fundus image and a CNN returns a confidence-graded result.</p><p class="muted" style="font-size:15px">Python</p></div>
+<div class="row row3"><a class="link" href="https://github.com/Virocchan/NLP-News-Article-Categorizer">News Article Categorizer</a><p>Sorts news articles into Sports, Politics, Technology, Entertainment and Business.</p><p class="muted" style="font-size:15px">Python</p></div>
+<div class="row row3" style="border-bottom:1px solid #C3CFE6"><a class="link" href="https://github.com/Virocchan?tab=repositories">All 20 repositories</a><p>Including reinforcement learning, fraud detection and agriculture work.</p><p class="muted" style="font-size:15px">GitHub</p></div>
+</div>
+</section>
 
-  <section class="about" id="about">
-    <div class="wrap reveal">
-      <h2>About</h2>
-      <p>I’m an AI student who builds websites that turn data and places into something people want to explore. <em>Tourism, population data and hospitality are my three experiments so far.</em></p>
-    </div>
-  </section>
-</main>
+<section id="websites" class="wrap sec">
+<h2>Web design projects</h2>
+<p class="muted" style="max-width:36em;margin:-12px 0 32px">Three websites I designed and built. Each one opens as a live site.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px">
 
-<footer><div class="wrap"><span>© 2026 Virocchan S.Elankoven</span><span>Built with HTML, CSS and JavaScript</span></div></footer>
+<article style="background:#fff;border:1px solid #C3CFE6;border-radius:28px;padding:20px 20px 28px">
+<a class="pv" href="lab1/index.html" aria-label="Open Tokyo Odyssey" style="background:#0A1F44;padding:0;display:block;position:relative;aspect-ratio:16/10;border-radius:18px;overflow:hidden">
+<div style="position:absolute;inset:0;padding:28px;display:flex;flex-direction:column;justify-content:space-between;color:#fff">
+<p style="font-size:clamp(56px,8vw,88px);font-weight:800;line-height:1;letter-spacing:-0.02em;font-family:'Hiragino Sans','Yu Gothic','Noto Sans JP',sans-serif">東京</p>
+<p style="font-size:15px;color:#C9D8F6">Shinjuku, Shibuya, Asakusa, Ginza, Akihabara, Roppongi</p>
+</div>
+</a>
+<div style="padding:24px 8px 0">
+<p class="muted" style="font-size:15px;font-weight:500">Lab 1</p>
+<h3 style="font-size:28px;font-weight:800;margin-top:6px">Tokyo Odyssey</h3>
+<p class="muted" style="margin-top:12px">A travel guide that walks through Tokyo’s neighborhoods, from Shinjuku and Shibuya to Asakusa, with curated experiences and an itinerary generator.</p>
+<ul class="plain" style="margin-top:20px;font-size:15px">
+<li style="display:flex;justify-content:space-between;gap:16px"><span class="muted">Explore</span><b style="font-weight:500;text-align:right">6 neighborhoods</b></li>
+<li style="display:flex;justify-content:space-between;gap:16px"><span class="muted">Feature</span><b style="font-weight:500;text-align:right">Itinerary generator</b></li>
+<li style="display:flex;justify-content:space-between;gap:16px"><span class="muted">Built with</span><b style="font-weight:500;text-align:right">HTML, Tailwind CSS</b></li>
+</ul>
+<p style="margin-top:20px"><a class="link" href="lab1/index.html">View live project</a></p>
+</div>
+</article>
 
-<script>
-(function(){
-  var root=document.documentElement;
+<article style="background:#fff;border:1px solid #C3CFE6;border-radius:28px;padding:20px 20px 28px">
+<a class="pv" href="lab2/index.html" aria-label="Open Malaysia Demographic Intelligence dashboard" style="background:#DCE6F8;padding:0;display:block;position:relative;aspect-ratio:16/10;border-radius:18px;overflow:hidden">
+<div style="position:absolute;inset:0;padding:24px;display:flex;flex-direction:column;justify-content:space-between;color:#0A1F44">
+<div style="display:flex;gap:32px">
+<div style="font-size:13px;color:#33425F">2026<strong style="display:block;font-size:30px;line-height:1;letter-spacing:-0.03em;color:#0A1F44;font-weight:800;margin-top:4px">34.39M</strong></div>
+<div style="font-size:13px;color:#33425F">2050 projected<strong style="display:block;font-size:30px;line-height:1;letter-spacing:-0.03em;color:#1A43C7;font-weight:800;margin-top:4px">41.19M</strong></div>
+</div>
+<svg viewBox="0 0 560 190" preserveAspectRatio="none" aria-hidden="true" style="width:100%;height:auto;display:block;overflow:visible">
+<line x1="0" y1="188" x2="560" y2="188" stroke="#B3C4E6"></line>
+<line x1="0" y1="95" x2="560" y2="95" stroke="#B3C4E6"></line>
+<path d="M0.0 132.6 L100.0 116.7 L200.0 94.5 L300.0 66.0 L400.0 39.1 L480.0 19.1 L500.0 18.7 L520.0 17.4 L540.0 10.3 L560.0 8.5 L560 190 L0 190 Z" fill="#2457F5" fill-opacity="0.12"></path>
+<path d="M0.0 132.6 L100.0 116.7 L200.0 94.5 L300.0 66.0 L400.0 39.1 L480.0 19.1 L500.0 18.7 L520.0 17.4 L540.0 10.3 L560.0 8.5" fill="none" stroke="#2457F5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</div>
+</a>
+<div style="padding:24px 8px 0">
+<p class="muted" style="font-size:15px;font-weight:500">Lab 2</p>
+<h3 style="font-size:28px;font-weight:800;margin-top:6px">Malaysia Demographic Intelligence</h3>
+<p class="muted" style="margin-top:12px">A population dashboard covering 1970 to 2050. Six interactive charts track growth, age groups and ethnic composition, followed by policy insights.</p>
+<ul class="plain" style="margin-top:20px;font-size:15px">
+<li style="display:flex;justify-content:space-between;gap:16px"><span class="muted">Growth</span><b style="font-weight:500;text-align:right">+0.75% per year</b></li>
+<li style="display:flex;justify-content:space-between;gap:16px"><span class="muted">Charts</span><b style="font-weight:500;text-align:right">6, interactive</b></li>
+<li style="display:flex;justify-content:space-between;gap:16px"><span class="muted">Built with</span><b style="font-weight:500;text-align:right">HTML, Chart.js</b></li>
+</ul>
+<p style="margin-top:20px"><a class="link" href="lab2/index.html">View live project</a></p>
+</div>
+</article>
 
-  /* theme */
-  var btn=document.getElementById('theme');
-  function dark(){var t=root.getAttribute('data-theme');return t?t==='dark':matchMedia('(prefers-color-scheme: dark)').matches}
-  function paint(){btn.textContent=dark()?'Light mode':'Dark mode'}
-  try{var s=localStorage.getItem('theme');if(s)root.setAttribute('data-theme',s)}catch(e){}
-  paint();
-  btn.addEventListener('click',function(){
-    var n=dark()?'light':'dark';root.setAttribute('data-theme',n);
-    try{localStorage.setItem('theme',n)}catch(e){}
-    paint();
-  });
+<article style="background:#fff;border:1px solid #C3CFE6;border-radius:28px;padding:20px 20px 28px">
+<a class="pv" href="lab3/homestay-vsla-website/index.html" aria-label="Open Homestay Vsla website" style="background:#DCE6F8;padding:0;display:block;position:relative;aspect-ratio:16/10;border-radius:18px;overflow:hidden">
+<img src="./assets/f40c44ee9ac23de963dd22c4c358edaa.jpg" alt="Homestay Vsla at Pantai Cenang, Langkawi, at sunset" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+</a>
+<div style="padding:24px 8px 0">
+<p class="muted" style="font-size:15px;font-weight:500">Lab 3</p>
+<h3 style="font-size:28px;font-weight:800;margin-top:6px">Homestay Vsla</h3>
+<p class="muted" style="margin-top:12px">A website for a private beachfront house at Pantai Cenang, Langkawi. It has four bedrooms, space for 15 guests, a video hero and a booking bar.</p>
+<ul class="plain" style="margin-top:20px;font-size:15px">
+<li style="display:flex;justify-content:space-between;gap:16px"><span class="muted">Pages</span><b style="font-weight:500;text-align:right">Home, gallery, explore, book</b></li>
+<li style="display:flex;justify-content:space-between;gap:16px"><span class="muted">Highlight</span><b style="font-weight:500;text-align:right">Video hero, scroll motion</b></li>
+<li style="display:flex;justify-content:space-between;gap:16px"><span class="muted">Built with</span><b style="font-weight:500;text-align:right">HTML, CSS, JavaScript</b></li>
+</ul>
+<p style="margin-top:20px"><a class="link" href="lab3/homestay-vsla-website/index.html">View live project</a></p>
+</div>
+</article>
+</div>
+</section>
 
-  /* header border on scroll */
-  var h=document.querySelector('header');
-  addEventListener('scroll',function(){h.classList.toggle('scrolled',scrollY>8)},{passive:true});
+<section id="build" class="wrap sec">
+<h2>What I can build for you</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:32px">
+<div style="border-top:2px solid #0A1F44;padding-top:20px"><h3>AI tools for any industry</h3><p class="muted" style="margin-top:12px">Claim checking, screening and monitoring tools, the kind of work behind MediProof, Optify and VitaSync.</p></div>
+<div style="border-top:2px solid #0A1F44;padding-top:20px"><h3>Computer vision and embedded prototypes</h3><p class="muted" style="margin-top:12px">Camera-based detection that runs on ESP32, Raspberry Pi and similar hardware, as in SPENZER.</p></div>
+<div style="border-top:2px solid #0A1F44;padding-top:20px"><h3>Websites and systems for businesses</h3><p class="muted" style="margin-top:12px">Business websites, full-stack web apps and dashboards, built with React and Vite and connected to API and real-time back ends.</p></div>
+</div>
+<div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px;margin-top:40px">
+<p style="font-size:22px;font-weight:700">Have a project in mind?</p>
+<a class="btn btn-p" href="mailto:virocchanelan@gmail.com">Email me</a>
+</div>
+</section>
 
-  /* hero glow follows the pointer */
-  var hero=document.querySelector('.hero');
-  hero.addEventListener('pointermove',function(e){
-    var r=hero.getBoundingClientRect();
-    hero.style.setProperty('--mx',(e.clientX-r.left)+'px');
-    hero.style.setProperty('--my',(e.clientY-r.top)+'px');
-  });
+<section id="about" class="wrap sec">
+<h2>Skills and background</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:48px">
+<div>
+<h3>Education</h3>
+<p style="margin-top:12px">Bachelor of Artificial Intelligence with Honours, Universiti Teknologi Malaysia. Expected 2027, GPA 4.00/4.00.</p>
+<p class="muted" style="margin-top:12px">Coursework: data structures and algorithms, artificial intelligence, machine learning, embedded systems and microcontrollers, data management.</p>
+</div>
+<dl>
+<div class="row" style="padding-top:0;border-top:2px solid #0A1F44;padding-top:16px"><dt style="font-weight:700">Languages</dt><dd>Python, C++, SQL, JavaScript</dd></div>
+<div class="row"><dt style="font-weight:700">AI and ML</dt><dd>TensorFlow, OpenCV, YOLO, Scikit-Learn, Pandas, NumPy, LLM APIs, Model Context Protocol, autonomous agents</dd></div>
+<div class="row"><dt style="font-weight:700">Robotics and hardware</dt><dd>ROS and ROS2, ESP32, Raspberry Pi 5, Arduino, Micro:bit</dd></div>
+<div class="row"><dt style="font-weight:700">Web and tools</dt><dd>React, Vite, Node.js, REST APIs, Google Cloud Platform, Git, GitHub, Linux</dd></div>
+</dl>
+</div>
+</section>
 
+<section class="wrap sec">
+<h2>Leadership</h2>
+<div style="border-bottom:1px solid #C3CFE6">
+<div class="row"><h3>Chairman, UMHV Student Wing</h3><p>Leads youth initiatives across technology, education and professional exposure, working with universities and industry professionals.</p></div>
+<div class="row"><h3>Vice President, PMH UTM</h3><p>Coordinates committees and volunteers for university programs. Previously Treasurer and Head of the Engineering and AI Workshop for Robomania 2025.</p></div>
+<div class="row"><h3>Project Lead, INNOTECH 3.0</h3><p>Ran a full-day technology summit at UTM on real-world AI and responsible AI, with UMHV, UTM, PMH UTM KL and Pepper Labs.</p></div>
+<div class="row"><h3>Project Lead, Dharmaveera Mahasabha 2.0</h3><p>Organised a youth convention at SEGi University Kota Damansara, including a townhall with professionals from engineering, biotechnology, agriculture, business and creative industries.</p></div>
+<div class="row"><h3>STEM outreach</h3><p>Taught AI, robotics and engineering workshops to about 250 Tamil primary-school students across seven schools.</p></div>
+</div>
+</section>
 
-  /* hero background: a slow neural network that reacts to the pointer */
-  (function(){
-    var c=document.getElementById('net'),x=c.getContext('2d'),dpr=Math.min(devicePixelRatio||1,2);
-    var W,H,N=[],m={x:-999,y:-999},still=matchMedia('(prefers-reduced-motion: reduce)').matches;
-    function size(){
-      W=hero.clientWidth;H=hero.clientHeight;c.width=W*dpr;c.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0);
-      var n=Math.round(Math.min(90,W*H/16000));N=[];
-      for(var i=0;i<n;i++)N.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*1.4+1});
-    }
-    function col(v){return getComputedStyle(root).getPropertyValue(v).trim()}
-    function frame(){
-      x.clearRect(0,0,W,H);
-      var a=col('--accent'),link=140,i,j,p,q,d;
-      for(i=0;i<N.length;i++){
-        p=N[i];
-        if(!still){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1}
-        for(j=i+1;j<N.length;j++){
-          q=N[j];d=Math.hypot(p.x-q.x,p.y-q.y);
-          if(d<link){x.globalAlpha=(1-d/link)*.35;x.strokeStyle=a;x.lineWidth=1;x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.stroke()}
-        }
-        d=Math.hypot(p.x-m.x,p.y-m.y);
-        if(d<200){x.globalAlpha=(1-d/200)*.6;x.strokeStyle=a;x.beginPath();x.moveTo(p.x,p.y);x.lineTo(m.x,m.y);x.stroke()}
-        x.globalAlpha=d<200?.95:.5;x.fillStyle=a;x.beginPath();x.arc(p.x,p.y,p.r+(d<200?1:0),0,6.283);x.fill();
-      }
-      if(!still)requestAnimationFrame(frame);
-    }
-    hero.addEventListener('pointermove',function(e){var r=hero.getBoundingClientRect();m.x=e.clientX-r.left;m.y=e.clientY-r.top});
-    hero.addEventListener('pointerleave',function(){m.x=m.y=-999});
-    addEventListener('resize',size);size();frame();
-    if(still)btn.addEventListener('click',function(){setTimeout(frame,0)});
-  })();
+<section class="wrap sec">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:48px">
+<div>
+<h2 style="font-size:32px">Achievements</h2>
+<ul class="plain" style="border-bottom:1px solid #C3CFE6">
+<li style="border-top:2px solid #0A1F44"><strong>Champion</strong>, Hackathon Sedia!, GDGoC MMU</li>
+<li>UM Technoton 2025, Top 20</li>
+<li>APAC Solution Challenge, Top 40</li>
+<li>Material Product Design Eco Challenge, Top 8</li>
+<li>Matriculation Science Carnival, Silver Award</li>
+</ul>
+</div>
+<div>
+<h2 style="font-size:32px">Certifications</h2>
+<ul class="plain" style="border-bottom:1px solid #C3CFE6">
+<li style="border-top:2px solid #0A1F44">Gemini Nexus: The Agentverse, final level and badge</li>
+<li>Global Consumer Intelligence World, April 2026, Matsuo-Iwasawa Laboratory, University of Tokyo</li>
+<li>ROS and ROS2 Robotics Developer</li>
+<li>Artificial Intelligence Fundamentals, IBM</li>
+<li>Engineering Ethics and Professionalism, UTM</li>
+</ul>
+</div>
+</div>
+</section>
 
-  /* scroll reveal */
-  var els=document.querySelectorAll('.reveal');
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(en){
-      en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}});
-    },{threshold:.15});
-    els.forEach(function(el){io.observe(el)});
-  }else{els.forEach(function(el){el.classList.add('in')})}
-
-  /* lab 2 preview: population 1970-2026 (data from lab2/index.html) */
-  var yrs=[1970,1980,1990,2000,2010,2018,2020,2022,2024,2026];
-  var pop=[10.88,13.88,18.10,23.49,28.59,32.38,32.45,32.70,34.05,34.39];
-  var W=560,H=190,x0=yrs[0],x1=yrs[yrs.length-1],mx=36;
-  var pts=yrs.map(function(y,i){return [((y-x0)/(x1-x0))*W,H-(pop[i]/mx)*H]});
-  var d=pts.map(function(p,i){return(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)}).join(' ');
-  document.getElementById('line').setAttribute('d',d);
-  document.getElementById('area').setAttribute('d',d+' L'+W+' '+H+' L0 '+H+' Z');
-
-  /* lab 3 preview: play the teaser video on hover or focus */
-  var card=document.getElementById('vsla'),v=card.querySelector('video'),img=card.querySelector('img');
-  function play(){v.play().then(function(){v.style.opacity=1}).catch(function(){})}
-  function stop(){v.pause()}
-  v.style.opacity=0;v.style.zIndex=0;img.style.zIndex=0;
-  card.addEventListener('mouseenter',play);card.addEventListener('mouseleave',stop);
-  card.addEventListener('focus',play);card.addEventListener('blur',stop);
-})();
+<footer style="background:#0A1F44;color:#F5F7FB;margin-top:112px;padding:80px 0 48px">
+<div class="wrap">
+<h2 style="font-size:clamp(40px,6vw,72px);font-weight:800;margin-bottom:24px">Let’s talk.</h2>
+<p style="font-size:22px;max-width:28em;color:#DCE6F8">Email is the quickest way to reach me for a project or a conversation.</p>
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:32px">
+<a class="btn" style="background:#fff;color:#0A1F44" href="mailto:virocchanelan@gmail.com">virocchanelan@gmail.com</a>
+<a class="btn" style="border:2px solid #fff;color:#fff" href="https://www.linkedin.com/in/virocchan/">LinkedIn</a>
+<a class="btn" style="border:2px solid #fff;color:#fff" href="https://github.com/Virocchan">GitHub</a>
+</div>
+<p style="margin-top:64px;font-size:15px;color:#AFC0E0">Virocchan S.Elankoven, Kuala Lumpur, Malaysia</p>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":3700}}'>
+class Component extends DCLogic {
+renderVals() {
+if (!this._cvRef) this._cvRef = (el) => { if (el) this._start(el); else this._stop(); };
+return { cvRef: this._cvRef };
+}
+componentDidMount() {
+const el = document.getElementById('nn-canvas');
+if (el) this._start(el);
+}
+componentWillUnmount() { this._stop(); }
+_stop() { if (this._nn) { this._nn(); this._nn = null; } this._cv = null; }
+_start(cv) {
+if (this._cv === cv) return;
+this._stop();
+this._cv = cv;
+this._nn = this._net(cv);
+}
+_net(cv) {
+const ctx = cv.getContext('2d');
+const doc = cv.ownerDocument;
+const win = doc.defaultView || window;
+const mqDark = win.matchMedia('(prefers-color-scheme: dark)');
+const mqRm = win.matchMedia('(prefers-reduced-motion: reduce)');
+let w = 1, h = 1, raf = 0, last = 0, visible = true, mouse = null, pal = null;
+const pts = [];
+const readPalette = () => {
+let dark = mqDark.matches;
+const m = /rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?/.exec(win.getComputedStyle(doc.body).backgroundColor || '');
+if (m && (m[4] === undefined || +m[4] > 0.5)) dark = (0.2126 * m[1] + 0.7152 * m[2] + 0.0722 * m[3]) < 128;
+pal = dark ? { rgb: '130,164,255', dot: 0.75, line: 0.34 } : { rgb: '36,87,245', dot: 0.6, line: 0.26 };
+};
+const draw = (dt) => {
+ctx.clearRect(0, 0, w, h);
+const k = dt / 16.7, L = 130, M = 170;
+if (dt) {
+for (const p of pts) {
+p.x += p.vx * k; p.y += p.vy * k;
+if (p.x < 0 || p.x > w) { p.vx *= -1; p.x = Math.min(w, Math.max(0, p.x)); }
+if (p.y < 0 || p.y > h) { p.vy *= -1; p.y = Math.min(h, Math.max(0, p.y)); }
+}
+}
+ctx.lineWidth = 1;
+for (let i = 0; i < pts.length; i++) {
+const a = pts[i];
+for (let j = i + 1; j < pts.length; j++) {
+const b = pts[j], dx = a.x - b.x, dy = a.y - b.y, d2 = dx * dx + dy * dy;
+if (d2 < L * L) {
+ctx.strokeStyle = `rgba(${pal.rgb},${(1 - Math.sqrt(d2) / L) * pal.line})`;
+ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+}
+}
+ctx.fillStyle = `rgba(${pal.rgb},${pal.dot})`;
+ctx.beginPath(); ctx.arc(a.x, a.y, a.r, 0, 6.2832); ctx.fill();
+}
+if (mouse) {
+for (const p of pts) {
+const d = Math.hypot(p.x - mouse.x, p.y - mouse.y);
+if (d < M) {
+ctx.strokeStyle = `rgba(${pal.rgb},${(1 - d / M) * Math.min(0.7, pal.line * 2.4)})`;
+ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+}
+}
+ctx.fillStyle = `rgba(${pal.rgb},0.9)`;
+ctx.beginPath(); ctx.arc(mouse.x, mouse.y, 3, 0, 6.2832); ctx.fill();
+}
+};
+const running = () => visible && !doc.hidden && !mqRm.matches;
+const frame = (t) => {
+raf = 0;
+if (!running()) return;
+const dt = Math.min(48, t - (last || t));
+last = t;
+draw(dt);
+raf = win.requestAnimationFrame(frame);
+};
+const kick = () => { if (!raf && running()) { last = 0; raf = win.requestAnimationFrame(frame); } };
+const resize = () => {
+const r = cv.getBoundingClientRect();
+w = Math.max(1, r.width); h = Math.max(1, r.height);
+const dpr = Math.min(win.devicePixelRatio || 1, 2);
+cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+const n = Math.max(24, Math.min(w < 700 ? 42 : 80, Math.round(w * h / 14000)));
+while (pts.length > n) pts.pop();
+while (pts.length < n) pts.push({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 0.28, vy: (Math.random() - 0.5) * 0.28, r: 1.2 + Math.random() * 1.4 });
+for (const p of pts) { if (p.x > w) p.x = Math.random() * w; if (p.y > h) p.y = Math.random() * h; }
+draw(0);
+kick();
+};
+const onMove = (e) => {
+if (mqRm.matches) return;
+const r = cv.getBoundingClientRect();
+const x = e.clientX - r.left, y = e.clientY - r.top;
+mouse = (x >= 0 && y >= 0 && x <= r.width && y <= r.height) ? { x: x, y: y } : null;
+};
+const onLeave = () => { mouse = null; };
+const onTheme = () => { readPalette(); if (!running()) draw(0); };
+const onMotion = () => { mouse = null; if (running()) kick(); else draw(0); };
+readPalette();
+win.addEventListener('pointermove', onMove, { passive: true });
+win.addEventListener('pointerup', onLeave);
+win.addEventListener('pointercancel', onLeave);
+win.addEventListener('blur', onLeave);
+doc.addEventListener('visibilitychange', kick);
+const on = (mq, fn) => { if (mq.addEventListener) mq.addEventListener('change', fn); else if (mq.addListener) mq.addListener(fn); };
+const off = (mq, fn) => { if (mq.removeEventListener) mq.removeEventListener('change', fn); else if (mq.removeListener) mq.removeListener(fn); };
+on(mqDark, onTheme); on(mqRm, onMotion);
+const io = new win.IntersectionObserver((es) => { visible = es[0].isIntersecting; if (visible) kick(); });
+const ro = new win.ResizeObserver(resize);
+io.observe(cv); ro.observe(cv);
+resize();
+return () => {
+if (raf) win.cancelAnimationFrame(raf);
+raf = 0;
+io.disconnect(); ro.disconnect();
+win.removeEventListener('pointermove', onMove);
+win.removeEventListener('pointerup', onLeave);
+win.removeEventListener('pointercancel', onLeave);
+win.removeEventListener('blur', onLeave);
+doc.removeEventListener('visibilitychange', kick);
+off(mqDark, onTheme); off(mqRm, onMotion);
+};
+}
+}
 </script>
 </body>
 </html>
