@@ -1,374 +1,223 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="ms">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virocchan | AI & Robotics Systems Hub</title>
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        cyberCyan: {
-                            50: '#ecfeff',
-                            500: '#06b6d4',
-                            600: '#0891b2',
-                            700: '#0e7490',
-                        },
-                        neuralIndigo: {
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Virocchan S.Elankoven | Portfolio Interaktif</title>
+<meta name="description" content="Portfolio Virocchan S.Elankoven: Portal Destinasi Pelancongan dan Analisis Populasi Penduduk Malaysia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&amp;family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f7f8; --surface:#ffffff; --ink:#0f1f26; --muted:#4a5c64; --line:#dbe5e8;
+  --green:#0b7285; --green-soft:#e0f3f6; --indigo:#c2410c; --indigo-soft:#fdeadf;
+  --g1:#0b7285; --g2:#d9480f;
+  --shadow:0 10px 30px rgba(15,50,60,.09);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0a1418; --surface:#121f25; --ink:#eef6f8; --muted:#9db3bb; --line:#223840;
+    --green:#3bc9db; --green-soft:#10323a; --indigo:#ff9a5c; --indigo-soft:#3a2314;
+    --shadow:0 10px 30px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0a1418; --surface:#121f25; --ink:#eef6f8; --muted:#9db3bb; --line:#223840;
+  --green:#3bc9db; --green-soft:#10323a; --indigo:#ff9a5c; --indigo-soft:#3a2314;
+  --shadow:0 10px 30px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.6}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--indigo);outline-offset:3px;border-radius:8px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
 
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(14px);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-        }
-        .dark .glass-card {
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(14px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .gradient-text {
-            background: linear-gradient(135deg, #06b6d4 0%, #6366f1 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .gradient-bg {
-            background: linear-gradient(135deg, #06b6d4 0%, #6366f1 100%);
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0f172a;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #334155;
-            border-radius: 4px;
-        }
-    </style>
+/* header */
+header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:16px;padding:12px 0;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;margin-right:auto;text-decoration:none}
+.logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;color:#fff;font-weight:800;background:linear-gradient(135deg,var(--g1),var(--g2))}
+.brand b{display:block;font-size:1.05rem;line-height:1.1}
+.brand b span{color:var(--green)}
+.brand small{color:var(--muted);font-size:.72rem}
+nav{display:flex;gap:4px;padding:5px;border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow-x:auto;max-width:100%}
+nav button,.theme{font:inherit;cursor:pointer;border:0;background:none;color:var(--muted);padding:8px 14px;border-radius:10px;font-weight:600;font-size:.88rem;white-space:nowrap}
+nav button:hover{color:var(--ink)}
+nav button[aria-selected="true"]{color:#fff;background:linear-gradient(135deg,var(--g1),var(--g2))}
+.theme{border:1px solid var(--line);background:var(--surface);width:42px;height:42px;padding:0;font-size:1.1rem}
+
+/* views */
+.view{display:none;padding:36px 0 64px}
+.view.active{display:block}
+.hero{background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:clamp(24px,5vw,64px);box-shadow:var(--shadow)}
+.tag{display:inline-block;background:var(--green-soft);color:var(--green);border:1px solid color-mix(in srgb,var(--green) 30%,transparent);padding:6px 14px;border-radius:99px;font-size:.78rem;font-weight:800}
+h1,h2,.brand b,.logo{font-family:Sora,"DM Sans",system-ui,sans-serif}
+h1{font-size:clamp(2.1rem,6vw,4rem);line-height:1.05;letter-spacing:-.03em;margin:20px 0 14px;max-width:16ch}
+.role{color:var(--green);font-weight:600;font-size:clamp(1rem,2.2vw,1.3rem);margin:0 0 18px}
+.lead{color:var(--muted);max-width:62ch;font-size:1.08rem;margin:0 0 28px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{font:inherit;font-weight:800;font-size:.9rem;padding:15px 24px;border-radius:12px;border:0;cursor:pointer;text-decoration:none;display:inline-block}
+.btn.p{color:#fff;background:linear-gradient(135deg,var(--g1),var(--g2))}
+.btn.d{color:var(--bg);background:var(--ink)}
+.theme{display:flex;align-items:center;gap:8px;width:auto!important;padding:0 14px!important;font-size:.85rem!important}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-top:28px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:28px;display:flex;flex-direction:column;gap:12px}
+.card .top{display:flex;justify-content:space-between;align-items:center}
+.ic{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:1.5rem}
+.c1 .ic,.c1 .pill{background:var(--green-soft);color:var(--green)}
+.c2 .ic,.c2 .pill{background:var(--indigo-soft);color:var(--indigo)}
+.pill{padding:4px 14px;border-radius:99px;font-size:.75rem;font-weight:800}
+.card h2{margin:6px 0 0;font-size:1.5rem;letter-spacing:-.02em}
+.card p{margin:0;color:var(--muted)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 8px}
+.chips span{font-size:.78rem;border:1px solid var(--line);border-radius:8px;padding:2px 10px;color:var(--muted)}
+.links{display:flex;gap:10px;margin-top:auto;flex-wrap:wrap}
+.links a,.links button{font:inherit;font-weight:700;font-size:.85rem;padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:var(--bg);cursor:pointer;text-decoration:none;color:var(--ink)}
+.links a:hover,.links button:hover{border-color:var(--indigo)}
+
+/* project viewer */
+.vh{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.vh h2{margin:0;font-size:1.5rem}
+.vh a{font-weight:700;text-decoration:none;border:1px solid var(--line);background:var(--surface);padding:10px 16px;border-radius:10px;font-size:.85rem}
+iframe{width:100%;height:78vh;min-height:520px;border:1px solid var(--line);border-radius:18px;background:#fff}
+
+/* profile */
+.prof{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:28px}
+.box h2{margin:0 0 12px;font-size:1.25rem}
+.box ul{margin:0;padding-left:20px;color:var(--muted)}
+.box li{margin:6px 0}
+footer{border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-size:.85rem;text-align:center}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col selection:bg-cyan-500 selection:text-white">
+<body>
 
-    <!-- NAVIGATION BAR -->
-    <nav class="sticky top-0 z-50 glass-card border-b border-slate-200 dark:border-slate-800 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <!-- Logo & Title -->
-                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
-                    <div class="w-10 h-10 rounded-xl gradient-bg flex items-center justify-center text-white font-black text-base shadow-md shadow-cyan-500/20">
-                        VA
-                    </div>
-                    <div>
-                        <span class="font-extrabold text-lg tracking-tight text-slate-900 dark:text-white block leading-none">
-                            VIROCCHAN <span class="text-cyan-500">ELANKOVEN</span>
-                        </span>
-                        <span class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold tracking-wider uppercase">AI & Robotics Systems Hub</span>
-                    </div>
-                </div>
-
-                <!-- Desktop Nav Tabs -->
-                <div class="hidden md:flex items-center space-x-1 bg-slate-200/60 dark:bg-slate-900/80 p-1.5 rounded-xl border border-slate-200 dark:border-slate-800">
-                    <button onclick="switchTab('home')" id="tab-home" class="nav-tab px-4 py-2 rounded-lg text-xs font-bold transition-all duration-200 text-white gradient-bg shadow-sm">
-                        <i class="fa-solid fa-house mr-1.5"></i> Home
-                    </button>
-                    <button onclick="switchTab('lab1')" id="tab-lab1" class="nav-tab px-4 py-2 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all duration-200">
-                        <i class="fa-solid fa-flask mr-1.5"></i> Lab 1 Project
-                    </button>
-                    <button onclick="switchTab('lab2')" id="tab-lab2" class="nav-tab px-4 py-2 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all duration-200">
-                        <i class="fa-solid fa-atom mr-1.5"></i> Lab 2 Project
-                    </button>
-                    <button onclick="switchTab('profile')" id="tab-profile" class="nav-tab px-4 py-2 rounded-lg text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all duration-200">
-                        <i class="fa-solid fa-user-gear mr-1.5"></i> Profile & Skills
-                    </button>
-                </div>
-
-                <!-- Right Actions: Theme Toggle -->
-                <div class="flex items-center space-x-3">
-                    <button id="themeToggle" onclick="toggleTheme()" class="p-2.5 rounded-xl bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition" title="Toggle Theme">
-                        <i class="fa-solid fa-moon dark:hidden text-base"></i>
-                        <i class="fa-solid fa-sun hidden dark:block text-base text-amber-400"></i>
-                    </button>
-                    
-                    <!-- Mobile Menu Button -->
-                    <button onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
-                        <i class="fa-solid fa-bars text-base"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mobile Navigation Menu -->
-        <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-4 pt-2 pb-4 space-y-2">
-            <button onclick="switchTab('home')" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center text-slate-700 dark:text-slate-200 hover:bg-cyan-50 dark:hover:bg-slate-800">
-                <i class="fa-solid fa-house w-6 text-cyan-500"></i> Home
-            </button>
-            <button onclick="switchTab('lab1')" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center text-slate-700 dark:text-slate-200 hover:bg-cyan-50 dark:hover:bg-slate-800">
-                <i class="fa-solid fa-flask w-6 text-cyan-500"></i> Lab 1 Project
-            </button>
-            <button onclick="switchTab('lab2')" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center text-slate-700 dark:text-slate-200 hover:bg-cyan-50 dark:hover:bg-slate-800">
-                <i class="fa-solid fa-atom w-6 text-indigo-500"></i> Lab 2 Project
-            </button>
-            <button onclick="switchTab('profile')" class="w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center text-slate-700 dark:text-slate-200 hover:bg-cyan-50 dark:hover:bg-slate-800">
-                <i class="fa-solid fa-user-gear w-6 text-cyan-500"></i> Profile & Skills
-            </button>
-        </div>
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#utama" data-go="utama">
+      <span class="logo">VE</span>
+      <span><b>Virocchan <span>S.Elankoven</span></b><small>Kejuruteraan Proses &amp; Teknologi Web</small></span>
+    </a>
+    <nav role="tablist" aria-label="Navigasi utama">
+      <button role="tab" data-go="utama" aria-selected="true">🏠 Utama</button>
+      <button role="tab" data-go="pelancongan" aria-selected="false">🏝️ 1: Pelancongan</button>
+      <button role="tab" data-go="populasi" aria-selected="false">📊 2: Populasi MY</button>
+      <button role="tab" data-go="profil" aria-selected="false">👤 Profil Pemaju</button>
     </nav>
+    <button class="theme" id="theme" aria-label="Tukar mod gelap atau cerah"><span id="ti">🌙</span><span id="tt">Mod Gelap</span></button>
+  </div>
+</header>
 
-    <!-- MAIN CONTENT CONTAINER -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col">
+<main class="wrap">
 
-        <!-- ================= SECTION 0: HOME / HERO ================= -->
-        <section id="sec-home" class="space-y-12">
-            <!-- Hero Banner -->
-            <div class="relative overflow-hidden rounded-3xl p-8 md:p-12 glass-card border border-slate-200 dark:border-slate-800 shadow-xl">
-                <div class="absolute -top-24 -right-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+  <section class="view active" id="utama">
+    <div class="hero">
+      <span class="tag">⚙️ KEJURUTERAAN PROSES &amp; WEB DIGITAL</span>
+      <h1>Virocchan S.Elankoven</h1>
+      <p class="role">Chemical Process Engineering Associate • STEM Enthusiast • Interactive Web Developer</p>
+      <p class="lead">Selamat datang ke portal portfolio interaktif saya. Di sini ditampilkan dua projek teras yang mengadunkan elemen reka bentuk UI/UX berasaskan data, keindahan pelancongan tempatan, serta analisis statistik demografi negara Malaysia.</p>
+      <div class="btns">
+        <button class="btn p" data-go="pelancongan">TEROKA PROJEK PELANCONGAN</button>
+        <button class="btn d" data-go="populasi">DASHBOARD POPULASI MY</button>
+      </div>
+    </div>
 
-                <div class="relative z-10 max-w-3xl">
-                    <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 text-xs font-extrabold uppercase tracking-wider mb-6 border border-cyan-500/20">
-                        <i class="fa-solid fa-robot text-sm"></i> Universiti Teknologi Malaysia • Master's in AI
-                    </div>
-                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight mb-4 text-slate-900 dark:text-white">
-                        Virocchan A/L S. Elankoven
-                    </h1>
-                    <p class="text-base sm:text-lg font-medium text-cyan-600 dark:text-cyan-400 mb-6">
-                        AI Researcher • Robotics Systems Architect • Full-Stack Developer
-                    </p>
-                    <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-                        Welcome to my interactive repository hub. Select a lab below to bring your live repository projects (`lab1/` and `lab2/`) directly into action within this dashboard.
-                    </p>
-                    <div class="flex flex-wrap gap-4">
-                        <button onclick="switchTab('lab1')" class="px-6 py-3.5 rounded-xl gradient-bg text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-cyan-500/25 hover:opacity-95 transform hover:-translate-y-0.5 transition-all">
-                            <i class="fa-solid fa-flask mr-2"></i> Launch Lab 1 Project
-                        </button>
-                        <button onclick="switchTab('lab2')" class="px-6 py-3.5 rounded-xl bg-slate-900 dark:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider border border-slate-700 hover:bg-slate-800 dark:hover:bg-slate-700 transition-all">
-                            <i class="fa-solid fa-atom mr-2"></i> Launch Lab 2 Project
-                        </button>
-                    </div>
-                </div>
-            </div>
+    <div class="cards">
+      <article class="card c1">
+        <div class="top"><span class="ic">🗺️</span><span class="pill">PROJEK 1</span></div>
+        <h2>Portal Destinasi Pelancongan</h2>
+        <p>Laman web pelancongan interaktif dengan reka bentuk premium, gambar destinasi, dan pengalaman melayari yang responsif untuk mana-mana skrin.</p>
+        <div class="chips"><span>HTML</span><span>Tailwind CSS</span><span>Font Awesome</span></div>
+        <div class="links"><button data-go="pelancongan">Lihat di sini</button><a href="lab1/" target="_blank" rel="noopener">Buka tab baharu</a></div>
+      </article>
+      <article class="card c2">
+        <div class="top"><span class="ic">👥</span><span class="pill">PROJEK 2</span></div>
+        <h2>Analisis Populasi Penduduk Malaysia</h2>
+        <p>Papan pemuka statistik visual interaktif untuk data demografi Malaysia (1970–2050), lengkap dengan graf dan analisis dasar berasaskan Chart.js.</p>
+        <div class="chips"><span>HTML</span><span>JavaScript</span><span>Chart.js</span></div>
+        <div class="links"><button data-go="populasi">Lihat di sini</button><a href="lab2/" target="_blank" rel="noopener">Buka tab baharu</a></div>
+      </article>
+    </div>
+  </section>
 
-            <!-- Quick Access Cards for Lab 1 & Lab 2 -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="glass-card rounded-2xl p-6 hover:shadow-2xl transition duration-300 border border-slate-200 dark:border-slate-800 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-500 flex items-center justify-center text-xl font-bold">
-                                <i class="fa-solid fa-flask"></i>
-                            </div>
-                            <span class="text-[10px] font-extrabold px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 uppercase tracking-widest">DIRECTORY: /LAB1</span>
-                        </div>
-                        <h2 class="text-2xl font-bold mb-3 text-slate-900 dark:text-white">Lab 1 Project Live View</h2>
-                        <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mb-6 leading-relaxed">
-                            Brings the standalone `index.html` from your repository's <code class="text-cyan-500 bg-cyan-500/10 px-1.5 py-0.5 rounded">lab1/</code> folder directly to life inside this portfolio wrapper.
-                        </p>
-                    </div>
-                    <button onclick="switchTab('lab1')" class="w-full py-3 rounded-xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 text-xs font-bold uppercase tracking-wider hover:bg-cyan-500 hover:text-white transition flex items-center justify-center space-x-2">
-                        <span>Open Lab 1 Live</span>
-                        <i class="fa-solid fa-arrow-right text-xs"></i>
-                    </button>
-                </div>
+  <section class="view" id="pelancongan">
+    <div class="vh"><h2>Projek 1: Portal Destinasi Pelancongan</h2><a href="lab1/" target="_blank" rel="noopener">Buka skrin penuh</a></div>
+    <iframe data-src="lab1/" title="Projek 1: Portal Destinasi Pelancongan" loading="lazy"></iframe>
+  </section>
 
-                <div class="glass-card rounded-2xl p-6 hover:shadow-2xl transition duration-300 border border-slate-200 dark:border-slate-800 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center text-xl font-bold">
-                                <i class="fa-solid fa-atom"></i>
-                            </div>
-                            <span class="text-[10px] font-extrabold px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 uppercase tracking-widest">DIRECTORY: /LAB2</span>
-                        </div>
-                        <h2 class="text-2xl font-bold mb-3 text-slate-900 dark:text-white">Lab 2 Project Live View</h2>
-                        <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mb-6 leading-relaxed">
-                            Brings the standalone `index.html` from your repository's <code class="text-indigo-500 bg-indigo-500/10 px-1.5 py-0.5 rounded">lab2/</code> folder directly to life inside this portfolio wrapper.
-                        </p>
-                    </div>
-                    <button onclick="switchTab('lab2')" class="w-full py-3 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-wider hover:bg-indigo-600 hover:text-white transition flex items-center justify-center space-x-2">
-                        <span>Open Lab 2 Live</span>
-                        <i class="fa-solid fa-arrow-right text-xs"></i>
-                    </button>
-                </div>
-            </div>
-        </section>
+  <section class="view" id="populasi">
+    <div class="vh"><h2>Projek 2: Analisis Populasi Malaysia</h2><a href="lab2/" target="_blank" rel="noopener">Buka skrin penuh</a></div>
+    <iframe data-src="lab2/" title="Projek 2: Analisis Populasi Malaysia" loading="lazy"></iframe>
+  </section>
 
+  <section class="view" id="profil">
+    <div class="prof">
+      <div class="box">
+        <h2>Tentang saya</h2>
+        <p style="color:var(--muted);margin:0">Saya Virocchan S.Elankoven, seorang pelajar kejuruteraan proses kimia yang meminati STEM dan membina laman web interaktif. Saya suka menggabungkan data, reka bentuk dan kod untuk menghasilkan sesuatu yang berguna dan mudah difahami.</p>
+      </div>
+      <div class="box">
+        <h2>Kemahiran</h2>
+        <ul>
+          <li>Kejuruteraan proses kimia</li>
+          <li>HTML, CSS dan JavaScript</li>
+          <li>Visualisasi data dengan Chart.js</li>
+          <li>Reka bentuk UI/UX responsif</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h2>Projek</h2>
+        <ul>
+          <li><a href="lab1/">Portal Destinasi Pelancongan</a></li>
+          <li><a href="lab2/">Analisis Populasi Penduduk Malaysia</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-        <!-- ================= SECTION 1: LAB 1 LIVE EMBED ================= -->
-        <section id="sec-lab1" class="hidden flex-grow flex flex-col space-y-4">
-            <div class="flex items-center justify-between glass-card p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
-                <div class="flex items-center space-x-3">
-                    <div class="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-500 flex items-center justify-center font-bold text-sm">
-                        <i class="fa-solid fa-flask"></i>
-                    </div>
-                    <div>
-                        <h2 class="font-black text-base text-slate-900 dark:text-white">Lab 1 Live Execution</h2>
-                        <p class="text-[11px] text-slate-500">Source: <code class="text-cyan-500">./lab1/index.html</code></p>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <a href="./lab1/index.html" target="_blank" class="px-3 py-1.5 rounded-xl bg-slate-900 dark:bg-slate-800 text-white text-xs font-bold hover:bg-cyan-600 transition">
-                        <i class="fa-solid fa-external-link mr-1"></i> Open Fullscreen
-                    </a>
-                </div>
-            </div>
-            <div class="flex-grow w-full h-[75vh] glass-card rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800">
-                <iframe id="iframeLab1" src="" class="w-full h-full border-0 bg-white"></iframe>
-            </div>
-        </section>
+</main>
 
+<footer><div class="wrap">© 2026 Virocchan S.Elankoven. Dibina dengan HTML, CSS dan JavaScript.</div></footer>
 
-        <!-- ================= SECTION 2: LAB 2 LIVE EMBED ================= -->
-        <section id="sec-lab2" class="hidden flex-grow flex flex-col space-y-4">
-            <div class="flex items-center justify-between glass-card p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
-                <div class="flex items-center space-x-3">
-                    <div class="w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-500 flex items-center justify-center font-bold text-sm">
-                        <i class="fa-solid fa-atom"></i>
-                    </div>
-                    <div>
-                        <h2 class="font-black text-base text-slate-900 dark:text-white">Lab 2 Live Execution</h2>
-                        <p class="text-[11px] text-slate-500">Source: <code class="text-indigo-500">./lab2/index.html</code></p>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <a href="./lab2/index.html" target="_blank" class="px-3 py-1.5 rounded-xl bg-slate-900 dark:bg-slate-800 text-white text-xs font-bold hover:bg-indigo-600 transition">
-                        <i class="fa-solid fa-external-link mr-1"></i> Open Fullscreen
-                    </a>
-                </div>
-            </div>
-            <div class="flex-grow w-full h-[75vh] glass-card rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800">
-                <iframe id="iframeLab2" src="" class="w-full h-full border-0 bg-white"></iframe>
-            </div>
-        </section>
+<script>
+(function(){
+  var views=document.querySelectorAll('.view'),tabs=document.querySelectorAll('nav button');
+  function go(id,push){
+    if(!document.getElementById(id)) id='utama';
+    views.forEach(function(v){v.classList.toggle('active',v.id===id)});
+    tabs.forEach(function(t){t.setAttribute('aria-selected',t.dataset.go===id)});
+    var f=document.querySelector('#'+id+' iframe');
+    if(f&&!f.src) f.src=f.dataset.src;
+    if(push!==false) history.replaceState(null,'','#'+id);
+    window.scrollTo(0,0);
+  }
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-go]');
+    if(t){e.preventDefault();go(t.dataset.go)}
+  });
+  window.addEventListener('hashchange',function(){go(location.hash.slice(1),false)});
+  go(location.hash.slice(1)||'utama',false);
 
-
-        <!-- ================= SECTION 3: PROFILE & SKILLS ================= -->
-        <section id="sec-profile" class="hidden space-y-8">
-            <div class="glass-card p-8 rounded-3xl border border-slate-200 dark:border-slate-800">
-                <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
-                    <div class="relative flex-shrink-0">
-                        <div class="w-36 h-36 rounded-2xl gradient-bg flex items-center justify-center text-5xl font-black text-white shadow-xl shadow-cyan-500/20 border-4 border-white dark:border-slate-800">
-                            VA
-                        </div>
-                        <div class="absolute -bottom-2 -right-2 bg-cyan-500 border-4 border-white dark:border-slate-900 w-8 h-8 rounded-full flex items-center justify-center text-white text-xs" title="Available for Collaboration">
-                            <i class="fa-solid fa-check"></i>
-                        </div>
-                    </div>
-
-                    <div class="flex-1 text-center md:text-left space-y-3">
-                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 text-xs font-bold uppercase tracking-wider">
-                            <i class="fa-solid fa-graduation-cap"></i> Universiti Teknologi Malaysia • Master's in AI
-                        </div>
-                        <h2 class="text-3xl font-black text-slate-900 dark:text-white">Virocchan A/L S. Elankoven</h2>
-                        <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed max-w-2xl">
-                            Master's student in Artificial Intelligence at Universiti Teknologi Malaysia specializing in mechatronics, system architecture, object detection, ROS2 robotics frameworks, machine learning, and computer vision.
-                        </p>
-                        
-                        <div class="flex flex-wrap justify-center md:justify-start gap-2 pt-2">
-                            <span class="px-3 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                                <i class="fa-solid fa-robot text-cyan-500 mr-1.5"></i> ROS2 Robotics
-                            </span>
-                            <span class="px-3 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                                <i class="fa-solid fa-brain text-indigo-500 mr-1.5"></i> PyTorch & TensorFlow
-                            </span>
-                            <span class="px-3 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                                <i class="fa-solid fa-microchip text-emerald-500 mr-1.5"></i> ESP32 & Raspberry Pi 5
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="mt-auto border-t border-slate-200 dark:border-slate-800 py-6 glass-card">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-            <div>
-                <span class="font-bold text-slate-700 dark:text-slate-300">Virocchan A/L S. Elankoven</span> • Repository Hub 2026
-            </div>
-            <div class="flex items-center space-x-4">
-                <a href="javascript:void(0)" onclick="switchTab('home')" class="hover:text-cyan-500 transition">Home</a>
-                <a href="javascript:void(0)" onclick="switchTab('lab1')" class="hover:text-cyan-500 transition">Lab 1</a>
-                <a href="javascript:void(0)" onclick="switchTab('lab2')" class="hover:text-cyan-500 transition">Lab 2</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        function switchTab(tabId) {
-            ['home', 'lab1', 'lab2', 'profile'].forEach(id => {
-                const sec = document.getElementById(`sec-${id}`);
-                const tab = document.getElementById(`tab-${id}`);
-                
-                if(id === tabId) {
-                    sec.classList.remove('hidden');
-                    if(tab) {
-                        tab.classList.add('gradient-bg', 'text-white', 'shadow-sm');
-                        tab.classList.remove('text-slate-600', 'dark:text-slate-400');
-                    }
-                    // Lazy load iframe content when tab is clicked to ensure they come to life
-                    if(id === 'lab1') {
-                        const iframe = document.getElementById('iframeLab1');
-                        if(!iframe.src || iframe.src === window.location.href) {
-                            iframe.src = './lab1/index.html';
-                        }
-                    }
-                    if(id === 'lab2') {
-                        const iframe = document.getElementById('iframeLab2');
-                        if(!iframe.src || iframe.src === window.location.href) {
-                            iframe.src = './lab2/index.html';
-                        }
-                    }
-                } else {
-                    sec.classList.add('hidden');
-                    if(tab) {
-                        tab.classList.remove('gradient-bg', 'text-white', 'shadow-sm');
-                        tab.classList.add('text-slate-600', 'dark:text-slate-400');
-                    }
-                }
-            });
-            document.getElementById('mobileMenu').classList.add('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function toggleMobileMenu() {
-            document.getElementById('mobileMenu').classList.toggle('hidden');
-        }
-
-        function toggleTheme() {
-            document.documentElement.classList.toggle('dark');
-        }
-    </script>
+  var btn=document.getElementById('theme'),root=document.documentElement;
+  function isDark(){
+    var t=root.getAttribute('data-theme');
+    return t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+  function paint(){var d=isDark();document.getElementById('ti').textContent=d?'☀️':'🌙';document.getElementById('tt').textContent=d?'Mod Cerah':'Mod Gelap'}
+  try{var s=localStorage.getItem('theme');if(s)root.setAttribute('data-theme',s)}catch(e){}
+  paint();
+  btn.addEventListener('click',function(){
+    var n=isDark()?'light':'dark';
+    root.setAttribute('data-theme',n);
+    try{localStorage.setItem('theme',n)}catch(e){}
+    paint();
+  });
+})();
+</script>
 </body>
 </html>
