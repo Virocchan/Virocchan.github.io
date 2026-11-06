@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A colourful memory matching game with three difficulty levels.">
+<title>Memory Match</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%BC%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <button class="icon-btn" id="themeBtn" aria-label="Switch to dark theme">🌙</button>
+    <button class="icon-btn" id="soundBtn" aria-label="Mute sound" aria-pressed="false">🔊</button>
+  </div>
+
+  <!-- HOME -->
+  <section id="home" class="screen">
+    <div class="hero" aria-hidden="true">🐼🦊🦁</div>
+    <h1>Memory Match</h1>
+    <p class="lead">Flip two cards at a time, find the pairs, and clear the board in as few moves as you can.</p>
+
+    <h2 class="label">Difficulty</h2>
+    <div class="choices" id="diffChoices" role="radiogroup" aria-label="Difficulty"></div>
+
+    <h2 class="label">Card theme</h2>
+    <div class="choices" id="themeChoices" role="radiogroup" aria-label="Card theme"></div>
+
+    <div class="home-actions">
+      <button class="btn primary big" id="playBtn">Play Game</button>
+      <button class="btn" id="howBtn">How to Play</button>
+    </div>
+  </section>
+
+  <!-- GAME -->
+  <section id="game" class="screen" hidden>
+    <h1 class="small-title">Memory Match</h1>
+    <div class="stats" aria-live="off">
+      <div class="stat"><span>Moves</span><b id="moves">0</b></div>
+      <div class="stat"><span>Time</span><b id="time">0:00</b></div>
+      <div class="stat"><span>Pairs</span><b id="pairs">0/8</b></div>
+      <div class="stat"><span>Best</span><b id="best">–</b></div>
+    </div>
+    <div class="controls">
+      <button class="btn" id="pauseBtn">Pause</button>
+      <button class="btn" id="restartBtn">Restart</button>
+      <button class="btn" id="menuBtn">Menu</button>
+    </div>
+    <div class="board-wrap">
+      <div class="board" id="board" role="grid" aria-label="Memory cards"></div>
+      <div class="pause-cover" id="pauseCover" hidden>
+        <p>Game paused</p>
+        <button class="btn primary" id="resumeBtn">Resume</button>
+      </div>
+    </div>
+    <p class="sr-only" id="announce" aria-live="polite"></p>
+  </section>
+</div>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <h2 id="mTitle"></h2>
+    <div id="mBody"></div>
+    <div class="modal-actions" id="mActions"></div>
+  </div>
+</div>
+<script src="js/game.js"></script>
+</body>
+</html>
