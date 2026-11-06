@@ -3,6 +3,32 @@
 <head>
 <meta charset="utf-8">
 <title>Virocchan Elankoven</title>
+<script>
+(function(){var r=document.documentElement;
+try{var t=localStorage.getItem('theme');if(t)r.setAttribute('data-theme',t)}catch(e){}
+document.addEventListener('click',function(e){
+var b=e.target.closest&&e.target.closest('#theme-toggle');if(!b)return;
+var c=r.getAttribute('data-theme');
+var dark=c?c==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+var n=dark?'light':'dark';r.setAttribute('data-theme',n);
+try{localStorage.setItem('theme',n)}catch(x){}
+window.dispatchEvent(new Event('themechange'));
+});})();
+</script>
+<script>
+window.addEventListener('load',function(){
+if(window.CSS&&CSS.supports&&CSS.supports('animation-timeline:view()'))return;
+if(matchMedia('(prefers-reduced-motion: reduce)').matches||!('IntersectionObserver' in window))return;
+var d=document,r=d.documentElement;
+var els=d.querySelectorAll('.sec>h2,#work>h3,.sec article,.row,#build>div>div,#about>div>div,section[aria-label="Highlights"]>div>div,footer .wrap>*');
+els.forEach(function(e,i){e.classList.add('mo');e.style.transitionDelay=(i%3)*90+'ms'});
+r.classList.add('mo-on');
+var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.12});
+els.forEach(function(e){io.observe(e)});
+var b=d.createElement('div');b.className='mo-bar';d.body.appendChild(b);
+addEventListener('scroll',function(){var h=r.scrollHeight-innerHeight;b.style.transform='scaleX('+(h>0?scrollY/h:0)+')'},{passive:true});
+});
+</script>
 <script src="./vendor/react.js"></script>
 <script src="./vendor/react-dom.js"></script>
 <script src="./support.js"></script>
@@ -43,7 +69,7 @@ html{scroll-behavior:smooth}
 @keyframes photoin{from{opacity:0;transform:translateY(28px) scale(.97)}}
 @keyframes settle{from{transform:scale(1.07)}}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(25,178,138,.55)}70%,100%{box-shadow:0 0 0 10px rgba(25,178,138,0)}}
-@keyframes rise{from{opacity:0;transform:translateY(28px)}}
+@keyframes rise{from{opacity:0;transform:translateY(72px) scale(.95)}}
 
 header>div:first-child>*{animation:fadeup .8s cubic-bezier(.2,.7,.2,1) backwards}
 header>div:first-child>:nth-child(2){animation-delay:.12s}
@@ -59,8 +85,8 @@ header p span{animation:pulse 2.6s ease-out 1.2s infinite}
 section[aria-label="Highlights"]>div>div:nth-child(2),#work article:nth-child(2),#build>div>div:nth-child(2){animation-range:entry 6% entry 51%}
 section[aria-label="Highlights"]>div>div:nth-child(3),#build>div>div:nth-child(3){animation-range:entry 12% entry 57%}
 section[aria-label="Highlights"]>div>div:nth-child(4){animation-range:entry 18% entry 63%}
-#websites article:nth-child(2){animation-range:entry 6% entry 51%}
-#websites article:nth-child(3){animation-range:entry 12% entry 57%}
+#websites article:nth-child(2),#websites article:nth-child(5){animation-range:entry 6% entry 51%}
+#websites article:nth-child(3),#websites article:nth-child(6){animation-range:entry 12% entry 57%}
 }
 
 .btn{transition:background-color .2s,color .2s,translate .2s,box-shadow .2s}
@@ -87,22 +113,71 @@ body::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none
 .pv:hover img{transform:scale(1.045)}
 
 @media(prefers-color-scheme:dark){
-body{background:#0A1426;color:#E8EEFA}
-body::before{background-image:radial-gradient(circle,rgba(170,195,255,.16) 1.2px,transparent 1.6px)}
-.muted{color:#A3B3D2}
-.row,ul.plain li{border-top-color:#2A4170}
-[style*="border-bottom:1px solid #C3CFE6"]{border-bottom-color:#2A4170!important}
-[style*="border-top:2px solid #0A1F44"]{border-top-color:#E8EEFA!important}
-.btn-s{border-color:#E8EEFA;color:#E8EEFA}
-.btn-s:hover{background:#E8EEFA;color:#0A1F44}
-.link,.row:hover h3,.navlink:hover{color:#8FB0FF}
-[style*="background:#DCE6F8;padding"]{background:#16294D!important;color:#E8EEFA}
-article[style*="background:#0A1F44"]{background:#12295A!important}
-article[style*="background:#DCE6F8"]{color:#0A1F44}
-article[style*="background:#DCE6F8"] .link{color:#1A43C7}
-footer{background:#050D1B!important}
-article[style*="background:#fff"]{background:#10192E!important;border-color:#2A4170!important}
+:root:not([data-theme="light"]) body{background:#0A1426;color:#E8EEFA}
+:root:not([data-theme="light"]) body::before{background-image:radial-gradient(circle,rgba(170,195,255,.16) 1.2px,transparent 1.6px)}
+:root:not([data-theme="light"]) .muted{color:#A3B3D2}
+:root:not([data-theme="light"]) .row,:root:not([data-theme="light"]) ul.plain li{border-top-color:#2A4170}
+:root:not([data-theme="light"]) [style*="border-bottom:1px solid #C3CFE6"]{border-bottom-color:#2A4170!important}
+:root:not([data-theme="light"]) [style*="border-top:2px solid #0A1F44"]{border-top-color:#E8EEFA!important}
+:root:not([data-theme="light"]) .btn-s{border-color:#E8EEFA;color:#E8EEFA}
+:root:not([data-theme="light"]) .btn-s:hover{background:#E8EEFA;color:#0A1F44}
+:root:not([data-theme="light"]) .link,:root:not([data-theme="light"]) .row:hover h3,:root:not([data-theme="light"]) .navlink:hover{color:#8FB0FF}
+:root:not([data-theme="light"]) [style*="background:#DCE6F8;padding"]{background:#16294D!important;color:#E8EEFA}
+:root:not([data-theme="light"]) article[style*="background:#0A1F44"]{background:#12295A!important}
+:root:not([data-theme="light"]) article[style*="background:#DCE6F8"]{color:#0A1F44}
+:root:not([data-theme="light"]) article[style*="background:#DCE6F8"] .link{color:#1A43C7}
+:root:not([data-theme="light"]) footer{background:#050D1B!important}
+:root:not([data-theme="light"]) article[style*="background:#fff"]{background:#10192E!important;border-color:#2A4170!important}
+:root:not([data-theme="light"]) .theme-toggle{border-color:#2A4170;color:#E8EEFA}
+:root:not([data-theme="light"]) .ti-sun{display:block}
+:root:not([data-theme="light"]) .ti-moon{display:none}
 }
+:root[data-theme="dark"] body{background:#0A1426;color:#E8EEFA}
+:root[data-theme="dark"] body::before{background-image:radial-gradient(circle,rgba(170,195,255,.16) 1.2px,transparent 1.6px)}
+:root[data-theme="dark"] .muted{color:#A3B3D2}
+:root[data-theme="dark"] .row,:root[data-theme="dark"] ul.plain li{border-top-color:#2A4170}
+:root[data-theme="dark"] [style*="border-bottom:1px solid #C3CFE6"]{border-bottom-color:#2A4170!important}
+:root[data-theme="dark"] [style*="border-top:2px solid #0A1F44"]{border-top-color:#E8EEFA!important}
+:root[data-theme="dark"] .btn-s{border-color:#E8EEFA;color:#E8EEFA}
+:root[data-theme="dark"] .btn-s:hover{background:#E8EEFA;color:#0A1F44}
+:root[data-theme="dark"] .link,:root[data-theme="dark"] .row:hover h3,:root[data-theme="dark"] .navlink:hover{color:#8FB0FF}
+:root[data-theme="dark"] [style*="background:#DCE6F8;padding"]{background:#16294D!important;color:#E8EEFA}
+:root[data-theme="dark"] article[style*="background:#0A1F44"]{background:#12295A!important}
+:root[data-theme="dark"] article[style*="background:#DCE6F8"]{color:#0A1F44}
+:root[data-theme="dark"] article[style*="background:#DCE6F8"] .link{color:#1A43C7}
+:root[data-theme="dark"] footer{background:#050D1B!important}
+:root[data-theme="dark"] article[style*="background:#fff"]{background:#10192E!important;border-color:#2A4170!important}
+:root[data-theme="dark"] .theme-toggle{border-color:#2A4170;color:#E8EEFA}
+:root[data-theme="dark"] .ti-sun{display:block}
+:root[data-theme="dark"] .ti-moon{display:none}
+
+.theme-toggle{width:36px;height:36px;padding:0;border-radius:50%;border:1px solid #C3CFE6;background:transparent;color:#0A1F44;display:inline-grid;place-items:center;cursor:pointer;transition:border-color .2s,color .2s,background-color .2s}
+.theme-toggle:hover{border-color:#2457F5;color:#2457F5}
+.theme-toggle:focus-visible{outline:3px solid #2457F5;outline-offset:3px}
+.theme-toggle svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ti-sun{display:none}
+
+/* ---- scroll motion ---- */
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes slidein{from{opacity:0;translate:-64px 0}}
+@keyframes headin{from{opacity:0;translate:-90px 0}}
+@keyframes drift{to{translate:0 -80px}}
+@keyframes fadeaway{to{translate:0 50px;opacity:.15}}
+@keyframes pvimg{from{translate:0 -6%;scale:1.14}to{translate:0 6%;scale:1.14}}
+@keyframes pvbox{from{translate:0 -3%}to{translate:0 3%}}
+@supports (animation-timeline:view()){
+html::after{content:"";position:fixed;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg,#2457F5,#19B28A);transform-origin:0 50%;z-index:100;animation:grow linear both;animation-timeline:scroll(root)}
+header>div:first-child{animation:fadeaway linear both;animation-timeline:scroll(root);animation-range:0 85vh}
+header>div:last-of-type{animation:photoin 1s cubic-bezier(.2,.7,.2,1) .2s backwards,drift linear both;animation-timeline:auto,scroll(root);animation-range:normal,0 85vh}
+.row,section[aria-label="Highlights"]>div>div{animation-name:slidein}
+.sec>h2,#work>h3,.sec>div>div>h2{animation-name:headin}
+.pv>img{animation:pvimg linear both;animation-timeline:view();animation-range:cover}
+.pv>div{animation:pvbox linear both;animation-timeline:view();animation-range:cover}
+}
+/* fallback for browsers without scroll-driven animations */
+.mo-on .mo{opacity:0;transform:translateY(56px) scale(.97);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.mo-on .mo.in{opacity:1;transform:none}
+.mo-bar{position:fixed;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg,#2457F5,#19B28A);transform:scaleX(0);transform-origin:0 50%;z-index:100}
 
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.btn:hover,article:hover,.row3:hover>:first-child{translate:none!important}}
 </style>
@@ -116,6 +191,7 @@ article[style*="background:#fff"]{background:#10192E!important;border-color:#2A4
 <a class="navlink" href="#build">Freelance</a>
 <a class="navlink" href="#about">About</a>
 <a class="btn btn-p" href="mailto:virocchanelan@gmail.com">Email me</a>
+<button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch between light and dark mode" title="Light / dark mode"><svg class="ti-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ti-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
 </nav>
 </div>
 
@@ -187,8 +263,8 @@ article[style*="background:#fff"]{background:#10192E!important;border-color:#2A4
 </section>
 
 <section id="websites" class="wrap sec">
-<h2>Web design projects</h2>
-<p class="muted" style="max-width:36em;margin:-12px 0 32px">Three websites I designed and built. Each one opens as a live site.</p>
+<h2>Web and game projects</h2>
+<p class="muted" style="max-width:36em;margin:-12px 0 32px">Six projects I designed and built: three websites and three browser games. Each one opens as a live project.</p>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px">
 
 <article style="background:#fff;border:1px solid #C3CFE6;border-radius:28px;padding:20px 20px 28px">
@@ -253,6 +329,57 @@ article[style*="background:#fff"]{background:#10192E!important;border-color:#2A4
 <li style="display:flex;justify-content:space-between;gap:16px"><span class="muted">Built with</span><b style="font-weight:500;text-align:right">HTML, CSS, JavaScript</b></li>
 </ul>
 <p style="margin-top:20px"><a class="link" href="lab3/homestay-vsla-website/index.html">View live project</a></p>
+</div>
+</article>
+
+<article style="background:#fff;border:1px solid #C3CFE6;border-radius:28px;padding:20px 20px 28px">
+<a class="pv" href="lab4/index.html" aria-label="Open 2048" style="background:#faf8ef;padding:0;display:block;position:relative;aspect-ratio:16/10;border-radius:18px;overflow:hidden">
+<div style="position:absolute;inset:0;display:grid;place-items:center"><div style="width:62%;aspect-ratio:1;padding:2.2%;border-radius:14px;background:#bbada0;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr);gap:2.2%"><div style="border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:clamp(14px,2.4vw,24px);background:#eee4da;color:#776e65">2</div><div style="border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:clamp(14px,2.4vw,24px);background:#ede0c8;color:#776e65">4</div><div style="border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:clamp(14px,2.4vw,24px);background:rgba(238,228,218,.35);color:inherit"></div><div style="border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:clamp(14px,2.4vw,24px);background:#f2b179;color:#f9f6f2">8</div><div style="border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:clamp(14px,2.4vw,24px);background:rgba(238,228,218,.35);color:inherit"></div><div style="border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:clamp(14px,2.4vw,24px);background:#f59563;color:#f9f6f2">16</div><div style="border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:clamp(14px,2.4vw,24px);background:#f67c5f;color:#f9f6f2">32</div><div style="border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:clamp(14px,2.4vw,24px);background:rgba(238,228,218,.35);color:inherit"></div><div style="border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:clamp(14px,2.4vw,24px);background:#f65e3b;color:#f9f6f2">64</div><div style="border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:clamp(14px,2.4vw,24px);background:#edcf72;color:#f9f6f2">128</div><div style="border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:clamp(14px,2.4vw,24px);background:#edcc61;color:#f9f6f2">256</div><div style="border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:clamp(14px,2.4vw,24px);background:#edc850;color:#f9f6f2">512</div><div style="border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:clamp(14px,2.4vw,24px);background:rgba(238,228,218,.35);color:inherit"></div><div style="border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:clamp(14px,2.4vw,24px);background:#edc53f;color:#f9f6f2">1024</div><div style="border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:clamp(14px,2.4vw,24px);background:#edc22e;color:#f9f6f2">2048</div><div style="border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:clamp(14px,2.4vw,24px);background:#eee4da;color:#776e65">2</div></div></div>
+</a>
+<div style="padding:24px 8px 0">
+<p class="muted" style="font-size:15px;font-weight:500">Lab 4</p>
+<h3 style="font-size:28px;font-weight:800;margin-top:6px">2048</h3>
+<p class="muted" style="margin-top:12px">The classic sliding-number puzzle. Merge matching tiles to reach 2048 using arrow keys, WASD or a swipe, with undo and a saved best score.</p>
+<ul class="plain" style="margin-top:20px;font-size:15px">
+<li style="display:flex;justify-content:space-between;gap:16px"><span class="muted">Controls</span><b style="font-weight:500;text-align:right">Arrow keys, WASD or swipe</b></li>
+<li style="display:flex;justify-content:space-between;gap:16px"><span class="muted">Features</span><b style="font-weight:500;text-align:right">Undo, saved best score</b></li>
+<li style="display:flex;justify-content:space-between;gap:16px"><span class="muted">Built with</span><b style="font-weight:500;text-align:right">HTML, CSS, JavaScript</b></li>
+</ul>
+<p style="margin-top:20px"><a class="link" href="lab4/index.html">Play now</a></p>
+</div>
+</article>
+
+<article style="background:#fff;border:1px solid #C3CFE6;border-radius:28px;padding:20px 20px 28px">
+<a class="pv" href="lab5/index.html" aria-label="Open Memory Match" style="background:linear-gradient(160deg,#e6f4ff,#f2f0ff);padding:0;display:block;position:relative;aspect-ratio:16/10;border-radius:18px;overflow:hidden">
+<div style="position:absolute;inset:0;padding:8%;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr);gap:4%"><div style="border-radius:12px;display:grid;place-items:center;font-size:clamp(20px,3.6vw,38px);background:#fff;box-shadow:0 2px 0 #d9d4f7">🐼</div><div style="border-radius:12px;display:grid;place-items:center;font-weight:800;color:#d8cfff;font-size:clamp(16px,2.6vw,28px);background:#7c5cff;box-shadow:0 2px 0 #5a3fd1">?</div><div style="border-radius:12px;display:grid;place-items:center;font-size:clamp(20px,3.6vw,38px);background:#fff;box-shadow:0 2px 0 #d9d4f7">🦊</div><div style="border-radius:12px;display:grid;place-items:center;font-weight:800;color:#d8cfff;font-size:clamp(16px,2.6vw,28px);background:#7c5cff;box-shadow:0 2px 0 #5a3fd1">?</div><div style="border-radius:12px;display:grid;place-items:center;font-weight:800;color:#d8cfff;font-size:clamp(16px,2.6vw,28px);background:#7c5cff;box-shadow:0 2px 0 #5a3fd1">?</div><div style="border-radius:12px;display:grid;place-items:center;font-size:clamp(20px,3.6vw,38px);background:#fff;box-shadow:0 2px 0 #d9d4f7">🚀</div><div style="border-radius:12px;display:grid;place-items:center;font-size:clamp(20px,3.6vw,38px);background:#fff;box-shadow:0 2px 0 #d9d4f7">🐼</div><div style="border-radius:12px;display:grid;place-items:center;font-weight:800;color:#d8cfff;font-size:clamp(16px,2.6vw,28px);background:#7c5cff;box-shadow:0 2px 0 #5a3fd1">?</div><div style="border-radius:12px;display:grid;place-items:center;font-size:clamp(20px,3.6vw,38px);background:#fff;box-shadow:0 2px 0 #d9d4f7">🦊</div><div style="border-radius:12px;display:grid;place-items:center;font-weight:800;color:#d8cfff;font-size:clamp(16px,2.6vw,28px);background:#7c5cff;box-shadow:0 2px 0 #5a3fd1">?</div><div style="border-radius:12px;display:grid;place-items:center;font-weight:800;color:#d8cfff;font-size:clamp(16px,2.6vw,28px);background:#7c5cff;box-shadow:0 2px 0 #5a3fd1">?</div><div style="border-radius:12px;display:grid;place-items:center;font-size:clamp(20px,3.6vw,38px);background:#fff;box-shadow:0 2px 0 #d9d4f7">🚀</div></div>
+</a>
+<div style="padding:24px 8px 0">
+<p class="muted" style="font-size:15px;font-weight:500">Lab 5</p>
+<h3 style="font-size:28px;font-weight:800;margin-top:6px">Memory Match</h3>
+<p class="muted" style="margin-top:12px">A colourful card-matching game with three difficulty levels, six emoji card themes, a move counter, a timer and a one to three star rating.</p>
+<ul class="plain" style="margin-top:20px;font-size:15px">
+<li style="display:flex;justify-content:space-between;gap:16px"><span class="muted">Levels</span><b style="font-weight:500;text-align:right">Easy, Medium, Hard</b></li>
+<li style="display:flex;justify-content:space-between;gap:16px"><span class="muted">Themes</span><b style="font-weight:500;text-align:right">6 emoji sets</b></li>
+<li style="display:flex;justify-content:space-between;gap:16px"><span class="muted">Built with</span><b style="font-weight:500;text-align:right">HTML, CSS, JavaScript</b></li>
+</ul>
+<p style="margin-top:20px"><a class="link" href="lab5/index.html">Play now</a></p>
+</div>
+</article>
+
+<article style="background:#fff;border:1px solid #C3CFE6;border-radius:28px;padding:20px 20px 28px">
+<a class="pv" href="lab6/index.html" aria-label="Open Tic-Tac-Toe" style="background:radial-gradient(circle at 50% 0,#2a2160,#14102e 70%);padding:0;display:block;position:relative;aspect-ratio:16/10;border-radius:18px;overflow:hidden">
+<div style="position:absolute;inset:0;display:grid;place-items:center"><div style="width:52%;aspect-ratio:1;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr)"><div style="display:grid;place-items:center;border-right:2px solid #3b3478;border-bottom:2px solid #3b3478;"><span style="font-weight:800;font-size:clamp(28px,5.4vw,56px);line-height:1;color:#ff3df2;text-shadow:0 0 14px #ff3df2">X</span></div><div style="display:grid;place-items:center;border-right:2px solid #3b3478;border-bottom:2px solid #3b3478;"><span style="font-weight:800;font-size:clamp(28px,5.4vw,56px);line-height:1;color:#ffe14d;text-shadow:0 0 14px #ffe14d">O</span></div><div style="display:grid;place-items:center;border-bottom:2px solid #3b3478;"><span style="font-weight:800;font-size:clamp(28px,5.4vw,56px);line-height:1;color:#ff3df2;text-shadow:0 0 14px #ff3df2">X</span></div><div style="display:grid;place-items:center;border-right:2px solid #3b3478;border-bottom:2px solid #3b3478;"></div><div style="display:grid;place-items:center;border-right:2px solid #3b3478;border-bottom:2px solid #3b3478;"><span style="font-weight:800;font-size:clamp(28px,5.4vw,56px);line-height:1;color:#ff3df2;text-shadow:0 0 14px #ff3df2">X</span></div><div style="display:grid;place-items:center;border-bottom:2px solid #3b3478;"><span style="font-weight:800;font-size:clamp(28px,5.4vw,56px);line-height:1;color:#ffe14d;text-shadow:0 0 14px #ffe14d">O</span></div><div style="display:grid;place-items:center;border-right:2px solid #3b3478;"><span style="font-weight:800;font-size:clamp(28px,5.4vw,56px);line-height:1;color:#ffe14d;text-shadow:0 0 14px #ffe14d">O</span></div><div style="display:grid;place-items:center;border-right:2px solid #3b3478;"></div><div style="display:grid;place-items:center;"><span style="font-weight:800;font-size:clamp(28px,5.4vw,56px);line-height:1;color:#ff3df2;text-shadow:0 0 14px #ff3df2">X</span></div></div></div>
+</a>
+<div style="padding:24px 8px 0">
+<p class="muted" style="font-size:15px;font-weight:500">Lab 6</p>
+<h3 style="font-size:28px;font-weight:800;margin-top:6px">Tic-Tac-Toe</h3>
+<p class="muted" style="margin-top:12px">Play solo against an Easy, Medium or Hard AI, or head to head with a friend. The Hard AI uses Minimax, so it never loses. Scores and streaks are saved.</p>
+<ul class="plain" style="margin-top:20px;font-size:15px">
+<li style="display:flex;justify-content:space-between;gap:16px"><span class="muted">Modes</span><b style="font-weight:500;text-align:right">Solo and Duo</b></li>
+<li style="display:flex;justify-content:space-between;gap:16px"><span class="muted">AI</span><b style="font-weight:500;text-align:right">Easy, Medium, Minimax</b></li>
+<li style="display:flex;justify-content:space-between;gap:16px"><span class="muted">Built with</span><b style="font-weight:500;text-align:right">HTML, CSS, JavaScript, Node tests</b></li>
+</ul>
+<p style="margin-top:20px"><a class="link" href="lab6/index.html">Play now</a></p>
 </div>
 </article>
 </div>
@@ -445,7 +572,7 @@ win.addEventListener('blur', onLeave);
 doc.addEventListener('visibilitychange', kick);
 const on = (mq, fn) => { if (mq.addEventListener) mq.addEventListener('change', fn); else if (mq.addListener) mq.addListener(fn); };
 const off = (mq, fn) => { if (mq.removeEventListener) mq.removeEventListener('change', fn); else if (mq.removeListener) mq.removeListener(fn); };
-on(mqDark, onTheme); on(mqRm, onMotion);
+on(mqDark, onTheme); on(mqRm, onMotion); win.addEventListener('themechange', onTheme);
 const io = new win.IntersectionObserver((es) => { visible = es[0].isIntersecting; if (visible) kick(); });
 const ro = new win.ResizeObserver(resize);
 io.observe(cv); ro.observe(cv);
@@ -459,7 +586,7 @@ win.removeEventListener('pointerup', onLeave);
 win.removeEventListener('pointercancel', onLeave);
 win.removeEventListener('blur', onLeave);
 doc.removeEventListener('visibilitychange', kick);
-off(mqDark, onTheme); off(mqRm, onMotion);
+off(mqDark, onTheme); off(mqRm, onMotion); win.removeEventListener('themechange', onTheme);
 };
 }
 }
