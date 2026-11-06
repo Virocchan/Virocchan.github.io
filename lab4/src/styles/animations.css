@@ -1,8 +1,0 @@
-@keyframes spawn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-@keyframes merge { 0% { transform: scale(1); } 50% { transform: scale(1.18); } 100% { transform: scale(1); } }
-@keyframes gain { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-28px); } }
-@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
-@keyframes rise { from { transform: translateY(12px); opacity: 0; } to { transform: none; opacity: 1; } }
-.tile.spawn { animation: spawn .18s ease-out .06s backwards; }
-.tile.merge { animation: merge .2s ease-out; }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }

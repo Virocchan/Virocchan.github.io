@@ -1,14 +1,159 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="description" content="A responsive 2048 puzzle game." />
-    <title>2048</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>2048</title>
+<style>
+:root{--bg:#faf8ef;--board:#bbada0;--cell:#cdc1b4;--text:#776e65;--strong:#5b524a;--btn:#8f7a66;--modal:#faf8ef;--font:"Clear Sans","Helvetica Neue",Arial,sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme=dark]{--bg:#1f1d1a;--board:#3d3832;--cell:#2e2a26;--text:#c9bfb3;--strong:#f0e8de;--btn:#6b5b4b;--modal:#2a2723;color-scheme:dark}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#1f1d1a;--board:#3d3832;--cell:#2e2a26;--text:#c9bfb3;--strong:#f0e8de;--btn:#6b5b4b;--modal:#2a2723;color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font)}
+body{min-height:100dvh}
+button{font:inherit}
+:focus-visible{outline:3px solid #3b82f6;outline-offset:2px}
+.app{width:min(500px,100% - 24px);margin:0 auto;padding:16px 0 32px}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px}
+h1{margin:0;font-size:clamp(48px,16vw,80px);line-height:1;color:var(--strong)}
+.scores{display:flex;gap:8px}
+.sb{position:relative;background:var(--board);color:#fff;border-radius:6px;padding:6px 14px;min-width:76px;text-align:center;display:flex;flex-direction:column}
+:root[data-theme=dark] .sb{color:var(--strong)}
+.sb small{font-size:12px;font-weight:700;opacity:.8}.sb b{font-size:22px}
+.gain{position:absolute;left:0;right:0;top:6px;font-weight:700;color:var(--strong);animation:gain .7s ease-out forwards;pointer-events:none}
+.sub{margin:8px 0 12px}
+.controls{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.btn{background:var(--btn);color:#f9f6f2;border:0;border-radius:6px;padding:10px 16px;font-weight:700;cursor:pointer;min-height:44px}
+.btn.p{background:#f67c5f}.btn.i{min-width:44px;padding:10px}.btn.sp{margin-left:auto}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.board{--gap:clamp(8px,2.5vw,14px);--cs:calc((100% - 5 * var(--gap)) / 4);position:relative;aspect-ratio:1;background:var(--board);border-radius:8px;touch-action:none;user-select:none;container-type:inline-size}
+.cell,.tile{position:absolute;width:var(--cs);height:var(--cs);border-radius:5px;left:calc(var(--gap) + var(--c) * (var(--cs) + var(--gap)));top:calc(var(--gap) + var(--r) * (var(--cs) + var(--gap)))}
+.cell{background:var(--cell)}
+.tile{display:grid;place-items:center;font-weight:800;font-size:11cqw;color:#776e65;background:#3c3a32;transition:left .11s ease,top .11s ease}
+.tile.new{animation:spawn .18s ease-out .1s backwards}.tile.pop{animation:pop .2s ease-out .08s}
+.v2{background:#eee4da}.v4{background:#ede0c8}.v8{background:#f2b179}.v16{background:#f59563}.v32{background:#f67c5f}.v64{background:#f65e3b}
+.v8,.v16,.v32,.v64,.v128,.v256,.v512,.v1024,.v2048,.vx{color:#f9f6f2}
+.v128{background:#edcf72;font-size:9.5cqw}.v256{background:#edcc61;font-size:9.5cqw}.v512{background:#edc850;font-size:9.5cqw}
+.v1024{background:#edc53f;font-size:7.5cqw}.v2048{background:#edc22e;font-size:7.5cqw;box-shadow:0 0 24px 4px rgba(237,194,46,.6)}.vx{font-size:6.5cqw}
+.how{margin-top:24px;font-size:15px;line-height:1.5}.how h2{font-size:18px;margin:0 0 6px;color:var(--strong)}.how p{margin:4px 0}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;place-items:center;padding:16px;z-index:10}
+.ov.on{display:grid;animation:fade .2s}
+.modal{background:var(--modal);border-radius:10px;padding:24px;width:min(360px,100%);text-align:center}
+.modal h2{margin:0 0 8px;font-size:28px;color:var(--strong)}.modal p{margin:0}
+.acts{display:flex;gap:8px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+@keyframes spawn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes pop{50%{transform:scale(1.18)}}
+@keyframes gain{to{opacity:0;transform:translateY(-28px)}}
+@keyframes fade{from{opacity:0}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main class="app">
+  <header>
+    <h1>2048</h1>
+    <div class="scores">
+      <div class="sb"><small>Score</small><b id="score" aria-live="polite">0</b></div>
+      <div class="sb"><small>Best</small><b id="best">0</b></div>
+    </div>
+  </header>
+  <p class="sub">Join the tiles, get to <strong>2048</strong>.</p>
+  <div class="controls">
+    <button class="btn" id="undo" aria-label="Undo last move">Undo</button>
+    <button class="btn p" id="new" aria-label="Start a new game">New Game</button>
+    <button class="btn i sp" id="theme" aria-label="Switch theme">☾</button>
+    <button class="btn i" id="sound" aria-label="Mute sound" aria-pressed="false">🔊</button>
+  </div>
+  <div class="board" id="board" role="application" aria-label="Game board"></div>
+  <section class="how" aria-labelledby="how">
+    <h2 id="how">How to play</h2>
+    <p><strong>Use arrow keys, WASD or swipe</strong> to slide every tile.</p>
+    <p>When two tiles with the same number touch, they <strong>merge into one</strong>.</p>
+    <p>Reach the <strong>2048</strong> tile to win, and keep going if you like.</p>
+  </section>
+</main>
+<div class="ov" id="ov"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="mt"><h2 id="mt"></h2><p id="mp"></p><div class="acts" id="ma"></div></div></div>
+<script>
+const N=4,$=s=>document.querySelector(s),boardEl=$('#board');
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let S,grid,best=+store.get('g2048:best',0)||0,prev=null,id=0,busy=false;
+let prefs={theme:matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light',sound:true,...store.get('g2048:prefs',{})};
+
+for(let r=0;r<N;r++)for(let c=0;c<N;c++){const d=document.createElement('div');d.className='cell';d.style.cssText=`--r:${r};--c:${c}`;boardEl.append(d)}
+
+// ---- sound ----
+let ac;function tone(f,d,t='triangle',g=.08,delay=0){try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();const s=ac.currentTime+delay,o=ac.createOscillator(),n=ac.createGain();o.type=t;o.frequency.value=f;n.gain.setValueAtTime(g,s);n.gain.exponentialRampToValueAtTime(.0001,s+d);o.connect(n).connect(ac.destination);o.start(s);o.stop(s+d)}catch(e){}}
+function sfx(k){if(!prefs.sound)return;if(k==='move')tone(220,.07);if(k==='merge'){tone(440,.1);tone(660,.12,'triangle',.08,.05)}if(k==='win')[523,659,784,1047].forEach((f,i)=>tone(f,.25,'sine',.09,i*.12));if(k==='over')[330,262,196].forEach((f,i)=>tone(f,.3,'sawtooth',.05,i*.15))}
+
+// ---- tiles ----
+const cls=v=>'tile '+(v>2048?'vx':'v'+v);
+function place(t){t.el.style.setProperty('--r',t.r);t.el.style.setProperty('--c',t.c)}
+function addTile(r,c,v,anim){const el=document.createElement('div');const t={id:++id,v,r,c,el};el.className=cls(v)+(anim?' new':'');el.textContent=v;place(t);boardEl.append(el);grid[r][c]=t;return t}
+function rebuild(nums){boardEl.querySelectorAll('.tile').forEach(e=>e.remove());grid=Array.from({length:N},()=>Array(N).fill(null));nums.forEach((row,r)=>row.forEach((v,c)=>v&&addTile(r,c,v,false)))}
+const nums=()=>grid.map(row=>row.map(t=>t?t.v:0));
+function spawn(){const e=[];grid.forEach((row,r)=>row.forEach((t,c)=>!t&&e.push([r,c])));if(!e.length)return;const[r,c]=e[Math.random()*e.length|0];addTile(r,c,Math.random()<.9?2:4,true)}
+function canMove(){for(let r=0;r<N;r++)for(let c=0;c<N;c++){if(!grid[r][c])return true;const v=grid[r][c].v;if(c+1<N&&grid[r][c+1].v===v)return true;if(r+1<N&&grid[r+1][c].v===v)return true}return false}
+
+// ---- state / ui ----
+function fresh(){S={score:0,moves:0,won:false,over:false};prev=null;rebuild(Array.from({length:N},()=>Array(N).fill(0)));spawn();spawn();ui();save()}
+function save(){store.set('g2048:game',{board:nums(),...S,prev})}
+function ui(){$('#score').textContent=S.score;if(S.score>best){best=S.score;store.set('g2048:best',best)}$('#best').textContent=best;$('#undo').disabled=!prev;
+  document.documentElement.dataset.theme=prefs.theme;$('#theme').textContent=prefs.theme==='dark'?'☀':'☾';$('#theme').setAttribute('aria-label','Switch to '+(prefs.theme==='dark'?'light':'dark')+' theme');
+  $('#sound').textContent=prefs.sound?'🔊':'🔇';$('#sound').setAttribute('aria-label',prefs.sound?'Mute sound':'Unmute sound');$('#sound').setAttribute('aria-pressed',String(!prefs.sound))}
+function modal(title,text,acts){$('#mt').textContent=title;$('#mp').textContent=text;const a=$('#ma');a.innerHTML='';acts.forEach(([l,fn,p])=>{const b=document.createElement('button');b.className='btn'+(p?' p':'');b.textContent=l;b.onclick=()=>{closeModal();fn()};a.append(b)});$('#ov').classList.add('on');a.querySelector('button').focus()}
+function closeModal(){$('#ov').classList.remove('on')}
+const modalOpen=()=>$('#ov').classList.contains('on');
+
+// ---- move ----
+const coord=(d,i,p)=>d==='left'?[i,p]:d==='right'?[i,N-1-p]:d==='up'?[p,i]:[N-1-p,i];
+function move(dir){
+  if(busy||modalOpen()||S.over)return;
+  const before=nums(),snap={board:before,score:S.score,moves:S.moves,won:S.won};
+  let gained=0,changed=false;const gone=[];
+  const ng=Array.from({length:N},()=>Array(N).fill(null));
+  for(let i=0;i<N;i++){
+    const line=[];for(let p=0;p<N;p++){const[r,c]=coord(dir,i,p);if(grid[r][c])line.push(grid[r][c])}
+    let o=0,last=null;
+    for(const t of line){
+      if(last&&last.v===t.v&&!last.m){last.v*=2;last.m=true;gained+=last.v;t.r=last.r;t.c=last.c;gone.push(t);changed=true}
+      else{const[r,c]=coord(dir,i,o++);if(t.r!==r||t.c!==c)changed=true;t.r=r;t.c=c;ng[r][c]=t;last=t}
+    }
+  }
+  if(!changed)return;
+  busy=true;prev=snap;grid=ng;S.score+=gained;S.moves++;
+  let merged=false,won=false;
+  grid.flat().forEach(t=>{if(t){place(t);if(t.m){merged=true;t.m=false;setTimeout(()=>{t.el.textContent=t.v;t.el.className=cls(t.v)+' pop'},110);if(t.v===2048&&!S.won)won=true}}});
+  gone.forEach(t=>{place(t);setTimeout(()=>t.el.remove(),115)});
+  if(gained){const g=document.createElement('span');g.className='gain';g.textContent='+'+gained;$('#score').parentElement.append(g);setTimeout(()=>g.remove(),700)}
+  setTimeout(()=>{
+    spawn();busy=false;
+    if(won)S.won=true;
+    S.over=!canMove();ui();save();
+    if(won){sfx('win');modal('You reached 2048!',`Score ${S.score} in ${S.moves} moves.`,[['Keep going',()=>{},true],['New Game',fresh]])}
+    else if(S.over){sfx('over');modal('Game over',`No moves left. Final score: ${S.score}.`,[['New Game',fresh,true]])}
+    else sfx(merged?'merge':'move');
+  },120);
+}
+function undo(){if(!prev||busy)return;S={score:prev.score,moves:prev.moves,won:prev.won,over:false};rebuild(prev.board);prev=null;ui();save()}
+
+// ---- input ----
+const keys={ArrowLeft:'left',ArrowRight:'right',ArrowUp:'up',ArrowDown:'down',a:'left',d:'right',w:'up',s:'down'};
+addEventListener('keydown',e=>{if(e.metaKey||e.ctrlKey||e.altKey)return;const d=keys[e.key]||keys[(e.key||'').toLowerCase()];if(d&&!modalOpen()){e.preventDefault();move(d)}});
+let t0=null;
+boardEl.addEventListener('touchstart',e=>{t0=[e.touches[0].clientX,e.touches[0].clientY]},{passive:true});
+boardEl.addEventListener('touchmove',e=>e.preventDefault(),{passive:false});
+boardEl.addEventListener('touchend',e=>{if(!t0)return;const dx=e.changedTouches[0].clientX-t0[0],dy=e.changedTouches[0].clientY-t0[1];t0=null;if(Math.max(Math.abs(dx),Math.abs(dy))<24)return;move(Math.abs(dx)>Math.abs(dy)?(dx>0?'right':'left'):(dy>0?'down':'up'))});
+$('#undo').onclick=undo;
+$('#new').onclick=()=>S.moves>0&&!S.over?modal('Start a new game?','Your current game will be lost. Your best score is kept.',[['New Game',fresh,true],['Cancel',()=>{}]]):fresh();
+$('#theme').onclick=()=>{prefs.theme=prefs.theme==='dark'?'light':'dark';store.set('g2048:prefs',prefs);ui()};
+$('#sound').onclick=()=>{prefs.sound=!prefs.sound;store.set('g2048:prefs',prefs);ui()};
+
+// ---- boot: restore saved game ----
+const sv=store.get('g2048:game',null);
+if(sv&&Array.isArray(sv.board)&&sv.board.length===N&&sv.board.every(r=>Array.isArray(r)&&r.length===N)){
+  S={score:sv.score||0,moves:sv.moves||0,won:!!sv.won,over:!!sv.over};prev=sv.prev||null;rebuild(sv.board);ui();
+  if(S.over)modal('Game over',`No moves left. Final score: ${S.score}.`,[['New Game',fresh,true]]);
+}else fresh();
+</script>
+</body>
 </html>
